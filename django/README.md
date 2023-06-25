@@ -12,6 +12,12 @@ $ docker compose build
 $ docker compose run backend django-admin startproject backend .
 ```
 
+ただし、`backend`サービスが`root`ユーザーのため、作られるファイルも`root`権限となっている。
+
+```console
+sudo chown -R "$USER:$USER" .
+```
+
 ## 実行
 
 ```console
