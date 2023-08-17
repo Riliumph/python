@@ -1,0 +1,24 @@
+version: "3.9"
+services:
+  note:
+    container_name: note-container
+    build:
+      context: ./
+      dockerfile: jupyter.dockerfile
+    # 認証系オプションはcomposeで制御
+    command: ["--ip=0.0.0.0", "--port=8888", "--NotebookApp.token=''"]
+    hostname: note-server
+    networks:
+      - jupyter_nw
+    ports:
+      - target: 8888
+        published: 8888
+    volumes:
+      - type: bind
+        source: ./
+        target: /app
+    stdin_open: true
+    tty: true
+
+networks:
+  jupyter_nw:
