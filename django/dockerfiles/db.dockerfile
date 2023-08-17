@@ -1,1 +1,5 @@
 FROM postgres:15.3-alpine3.18
+
+ENV POSTGRES_USER=postgres
+ENV POSTGRES_PASSWPRD=postgres
+ENV POSTGRES_HOST_AUTH_METHOD=trust

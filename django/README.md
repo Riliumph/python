@@ -29,3 +29,12 @@ $ docker compose up -d
 ```console
 $ docker compose down
 ```
+
+## DBへの接続
+
+直接DBコンテナに入る場合は、`-h`オプションを省略できる。
+
+```console
+$ docker compose exec -it db /bin/bash
+# psql -U $POSTGRES_USER -d $POSTGRES_USER
+```
