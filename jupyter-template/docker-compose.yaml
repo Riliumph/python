@@ -2,10 +2,8 @@ version: "3.8"
 services:
   jupyter:
     build:
-      context: ../.devcontainer
-      dockerfile: dev.dockerfile
-      args:
-        HADOLINT_URL: ${HADOLINT_URL}
+      context: .
+      dockerfile: Dockerfile
     # 認証系オプションはcomposeで制御
     command:
       [
