@@ -1,10 +1,9 @@
-# https://docs.docker.com/compose/compose-file/
 version: '3.8'
 services:
   db:
     container_name: db
     build:
-      context: ./dockerfiles
+      context: .
       dockerfile: db.dockerfile
     hostname: db
     networks:
@@ -13,7 +12,6 @@ services:
       - target: 5432
         published: 5432
     volumes:
-      # https://docs.docker.com/compose/compose-file/#volumes
       - type: volume
         source: db-storage
         target: /var/lib/postgresql/data
@@ -21,20 +19,19 @@ services:
     container_name: backend
     build:
       context: .
-      dockerfile: ./dockerfiles/backend.dockerfile
+      dockerfile: backend.dockerfile
     hostname: backend
     networks:
       - backend_nw
     stdin_open: true # -i
     tty: true # -t
     ports:
-      - target: 8000    # container
+      - target: 8000 # container
         published: 8000 # host
     volumes:
       - type: bind
-        source: ./
-        target: /code
-    # command: python3 manage.py runserver 0.0.0.0:8000
+        source: ./src
+        target: /opt/django
 volumes:
   db-storage:
     name: db-data
