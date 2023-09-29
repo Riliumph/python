@@ -6,8 +6,16 @@
 	"build": {
 		"dockerfile": "Dockerfile",
 		"args": {
-			"HADOLINT_URL": "https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Linux-x86_64"
+			"HADOLINT_URL": "https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Linux-x86_64",
+			"GIT_URL": "https://github.com/docker/cli/blob/master/contrib/completion/bash/docker"
 		}
+	},
+	"containerEnv": {
+		"PGHOST": "localhost",
+		"PGPORT": "5432",
+		"PGDATABASE": "postgres",
+		"PGUSER": "postgres",
+		"PGPASSWORD": "postgres",
 	},
 	"runArgs": [
 		"--hostname",

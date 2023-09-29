@@ -4,18 +4,23 @@ RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y\
     peco\
     silversearcher-ag\
+    vim\
     && apt-get clean\
     && rm -rf /var/lib/apt/lists/*
 
 # hadolint for docker
 ARG HADOLINT_URL
-RUN wget --progress=dot:giga -O /usr/local/bin/hadolint ${HADOLINT_URL} --no-check-certificate\
+RUN curl -Lk -o /usr/local/bin/hadolint ${HADOLINT_URL}\
     && chmod o+x /usr/local/bin/hadolint
 
 # git
 WORKDIR /usr/share/doc/git/contrib/diff-highlight
 RUN make\
-    && chmod o+x diff-highlight
+    && chmod o+x diff-highlight\
+    && ln -s /usr/share/doc/git/contrib/diff-highlight/diff-highlight /usr/local/bin
 
 # New user
 USER 1000
+
+# Completion for Bash 5.1.4(Resolve at Bash 5.2.1)
+RUN echo "source /usr/share/bash-completion/completions/docker" >> ~/.bashrc
