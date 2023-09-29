@@ -13,5 +13,6 @@
     "[json]": {
         "editor.defaultFormatter": "vscode.json-language-features",
         "editor.tabSize": 2
-    }
+    },
+    "sql-formatter.uppercase": true
 }
