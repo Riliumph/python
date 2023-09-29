@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: db.dockerfile
-    hostname: db
+    hostname: db_server
     networks:
       - db_nw
     ports:
@@ -20,9 +20,10 @@ services:
     build:
       context: .
       dockerfile: backend.dockerfile
-    hostname: backend
+    hostname: backend_server
     networks:
       - backend_nw
+      - db_nw
     stdin_open: true # -i
     tty: true # -t
     ports:

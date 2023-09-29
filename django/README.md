@@ -35,7 +35,7 @@ $ docker compose down
 直接DBコンテナに入る場合は、`-h`オプションを省略できる。
 
 ```console
-$ docker compose exec -it db psql -U $POSTGRES_USER -d $POSTGRES_USER
+$ docker compose exec -it db psql -U postgres
 ```
 
 以下の環境変数がホスト側（psql実行側）に存在する場合、ユーザーなどの指定は必要ない。
