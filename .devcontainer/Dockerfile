@@ -21,6 +21,8 @@ RUN make\
 
 # New user
 USER 1000
+WORKDIR /home/vscode
 
 # Completion for Bash 5.1.4(Resolve at Bash 5.2.1)
-RUN echo "source /usr/share/bash-completion/completions/docker" >> ~/.bashrc
+RUN echo "source /usr/share/bash-completion/completions/docker" >> ~/.bashrc\
+    && python -m pip completion --bash >> ~/.bashrc
