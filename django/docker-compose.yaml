@@ -1,7 +1,6 @@
 version: '3.8'
 services:
   db:
-    container_name: db
     build:
       context: .
       dockerfile: db.dockerfile
@@ -12,31 +11,26 @@ services:
       - target: 5432
         published: 5432
     volumes:
-      - type: volume
-        source: db-storage
-        target: /var/lib/postgresql/data
-  backend:
-    container_name: backend
-    build:
-      context: .
-      dockerfile: backend.dockerfile
-    hostname: backend_server
-    networks:
-      - backend_nw
-      - db_nw
-    stdin_open: true # -i
-    tty: true # -t
-    ports:
-      - target: 8000 # container
-        published: 8000 # host
-    volumes:
       - type: bind
-        source: ./src
-        target: /opt/django
-volumes:
-  db-storage:
-    name: db-data
-    external: false
+        source: initdb
+        target: /docker-entrypoint-initdb.d
+  # backend:
+  #   build:
+  #     context: .
+  #     dockerfile: backend.dockerfile
+  #   hostname: backend_server
+  #   networks:
+  #     - backend_nw
+  #     - db_nw
+  #   stdin_open: true # -i
+  #   tty: true # -t
+  #   ports:
+  #     - target: 8000 # container
+  #       published: 8000 # host
+  #   volumes:
+  #     - type: bind
+  #       source: ./src
+  #       target: /opt/django
 networks:
   db_nw:
     external: false
@@ -44,9 +38,9 @@ networks:
       driver: default
       config:
         - subnet: 10.10.10.0/24
-  backend_nw:
-    external: false
-    ipam:
-      driver: default
-      config:
-        - subnet: 10.10.20.0/24
+  # backend_nw:
+  #   external: false
+  #   ipam:
+  #     driver: default
+  #     config:
+  #       - subnet: 10.10.20.0/24
