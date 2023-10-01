@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "disable_existing_loggers": false,
+  "formatters": {
+    "default": {
+      "class": "logging.Formatter",
+      "format": "{asctime} {levelname} {module} {process} {thread} {pathname}:{lineno} {message}",
+      "style": "{"
+    },
+    "json": {
+      "()": "pythonjsonlogger.jsonlogger.JsonFormatter",
+      "json_ensure_ascii": false,
+      "format": "{asctime} {levelname} {module} {process} {thread} {pathname}:{lineno} {message}",
+      "style": "{"
+    }
+  },
+  "handlers": {
+    "file": {
+      "class": "logging.FileHandler",
+      "filename": "app.log",
+      "formatter": "json"
+    },
+    "console": {
+      "class": "logging.StreamHandler",
+      "formatter": "default"
+    }
+  },
+  "root": {
+    "handlers": [
+      "file",
+      "console"
+    ],
+    "level": "INFO"
+  }
+}
