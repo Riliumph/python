@@ -14,5 +14,8 @@
         "editor.defaultFormatter": "vscode.json-language-features",
         "editor.tabSize": 2
     },
-    "sql-formatter.uppercase": true
+    "sql-formatter.uppercase": true,
+    "python.autoComplete.extraPaths": [
+        "/home/vscode/.local/lib/python3.11/site-packages"
+    ]
 }
