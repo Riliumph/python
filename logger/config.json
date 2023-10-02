@@ -4,20 +4,27 @@
   "formatters": {
     "default": {
       "class": "logging.Formatter",
-      "format": "{asctime} {levelname} {module} {process} {thread} {pathname}:{lineno} {message}",
+      "format": "{asctime} {levelname} {message}",
       "style": "{"
     },
     "json": {
       "()": "pythonjsonlogger.jsonlogger.JsonFormatter",
       "json_ensure_ascii": false,
-      "format": "{asctime} {levelname} {module} {process} {thread} {pathname}:{lineno} {message}",
+      "format": "{asctime} {levelname} {message}",
       "style": "{"
     }
   },
   "handlers": {
-    "file": {
-      "class": "logging.FileHandler",
+    "SizedSysFile": {
+      "class": "logging.handlers.RotatingFileHandler",
+      "filename": "sys.log",
+      "maxBytes": 50000,
+      "formatter": "json"
+    },
+    "SizedAppFile": {
+      "class": "logging.handlers.RotatingFileHandler",
       "filename": "app.log",
+      "maxBytes": 50000,
       "formatter": "json"
     },
     "console": {
@@ -25,11 +32,21 @@
       "formatter": "default"
     }
   },
-  "root": {
-    "handlers": [
-      "file",
-      "console"
-    ],
-    "level": "INFO"
+  "loggers": {
+    "app": {
+      "handlers": [
+        "SizedAppFile",
+        "console"
+      ],
+      "level": "INFO",
+      "propagate": false
+    },
+    "sys": {
+      "handlers": [
+        "SizedSysFile"
+      ],
+      "level": "INFO",
+      "propagate": false
+    }
   }
 }
