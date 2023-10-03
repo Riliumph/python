@@ -19,8 +19,16 @@ RUN make\
     && chmod o+x diff-highlight\
     && ln -s /usr/share/doc/git/contrib/diff-highlight/diff-highlight /usr/local/bin
 
+WORKDIR /root
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
 # New user
 USER 1000
 
+
 # Completion for Bash 5.1.4(Resolve at Bash 5.2.1)
-RUN echo "source /usr/share/bash-completion/completions/docker" >> ~/.bashrc
+RUN { \
+    echo "source /usr/share/bash-completion/completions/docker"; \
+    pip completion --bash;\
+    } >> ~/.bashrc
