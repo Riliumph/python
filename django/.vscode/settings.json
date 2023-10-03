@@ -17,5 +17,8 @@
     "sql-formatter.uppercase": true,
     "python.autoComplete.extraPaths": [
         "/home/vscode/.local/lib/python3.11/site-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/vscode/.local/lib/python3.11/site-packages"
     ]
 }
