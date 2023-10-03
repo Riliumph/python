@@ -25,6 +25,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # New user
 USER 1000
+WORKDIR /home/vscode
 
 
 # Completion for Bash 5.1.4(Resolve at Bash 5.2.1)
