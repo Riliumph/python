@@ -5,6 +5,7 @@ RUN apt-get update \
     peco\
     silversearcher-ag\
     vim\
+    default-jdk\
     && apt-get clean\
     && rm -rf /var/lib/apt/lists/*
 
