@@ -16,6 +16,7 @@
 		"PGDATABASE": "postgres",
 		"PGUSER": "postgres",
 		"PGPASSWORD": "postgres",
+		"PYTHONPATH": "/home/vscode/.local/lib/python3.11/site-packages"
 	},
 	"runArgs": [
 		"--hostname",
