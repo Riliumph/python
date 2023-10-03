@@ -139,31 +139,54 @@ LOG_BASE_DIR = "/opt/django/log"
 os.makedirs(LOG_BASE_DIR, exist_ok=True)
 
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    # ログ出力フォーマットの設定
-    'formatters': {
-        'production': {
-            'format': '%(asctime)s [%(levelname)s] %(process)d %(thread)d '
-                      '%(pathname)s:%(lineno)d %(message)s'
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "default": {
+            "class": "logging.Formatter",
+            "format": "{asctime} {levelname} {message}",
+            "style": "{"
         },
+        "json": {
+            "()": "pythonjsonlogger.jsonlogger.JsonFormatter",
+            "json_ensure_ascii": False,
+            "format": "{asctime} {levelname} {message}",
+            "style": "{"
+        }
     },
-    # ハンドラの設定
-    'handlers': {
-        'file': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': f'{LOG_BASE_DIR}/sample_app.log',
-            'formatter': 'production',
+    "handlers": {
+        "SizedSysFile": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": "sys.log",
+            "maxBytes": 50000,
+            "formatter": "json"
         },
+        "SizedAppFile": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": "app.log",
+            "maxBytes": 50000,
+            "formatter": "json"
+        },
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "default"
+        }
     },
-    # ロガーの設定
-    'loggers': {
-        # 自分で追加したアプリケーション全般のログを拾うロガー
-        '': {
-            'handlers': ['file'],
-            'level': 'INFO',
-            'propagate': False,
+    "loggers": {
+        "app": {
+            "handlers": [
+                "SizedAppFile",
+                "console"
+            ],
+            "level": "INFO",
+            "propagate": False
+        },
+        "sys": {
+            "handlers": [
+                "SizedSysFile"
+            ],
+            "level": "INFO",
+            "propagate": False
         },
         # Django自身が出力するログ全般を拾うロガー
         'django': {
@@ -171,5 +194,5 @@ LOGGING = {
             'level': 'INFO',
             'propagate': False,
         },
-    },
+    }
 }
