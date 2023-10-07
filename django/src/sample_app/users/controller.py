@@ -7,7 +7,7 @@ from rest_framework import generics
 from rest_framework import exceptions
 from rest_framework import response
 
-from sample_app.users.model import *
+from sample_app.users.entity import *
 
 logger = logging.getLogger("app")
 
@@ -17,7 +17,7 @@ class GetUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     lookup_field = "user_id"
 
     def get_queryset(self):
-        return UserModel.objects.all().order_by(self.lookup_field)
+        return UserEntity.objects.all().order_by(self.lookup_field)
 
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
@@ -36,7 +36,7 @@ class GetAllCreate(generics.ListCreateAPIView):
     lookup_field = "user_id"
 
     def get_queryset(self):
-        return UserModel.objects.all().order_by(self.lookup_field)
+        return UserEntity.objects.all().order_by(self.lookup_field)
 
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)

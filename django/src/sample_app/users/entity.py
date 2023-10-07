@@ -1,14 +1,14 @@
 from django.db import models
 from rest_framework import serializers
 
+from sample_app.base.entity import BaseEntity
+
 TABLE_NAME = "users"
 
 
-class UserModel(models.Model):
+class UserEntity(BaseEntity):
     user_id = models.AutoField(primary_key=True)
     user_name = models.TextField(null=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = TABLE_NAME
@@ -16,5 +16,5 @@ class UserModel(models.Model):
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = UserModel
+        model = UserEntity
         fields = '__all__'
