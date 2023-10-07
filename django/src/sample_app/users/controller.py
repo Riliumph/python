@@ -1,4 +1,5 @@
 import json
+import logging
 
 from django.forms.models import model_to_dict
 
@@ -8,6 +9,7 @@ from rest_framework import response
 
 from sample_app.users.model import *
 
+logger = logging.getLogger("app")
 
 class GetUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     # GenericApiView member
@@ -48,10 +50,9 @@ class GetAllCreate(generics.ListCreateAPIView):
             committed = s.save()  # commit to DB
             res_body["users"] = model_to_dict(committed)
         except exceptions.APIException as e:
-            # rethrow rest_framework Exception
-            raise e
+            logger.error("rest_framework exception", extra={"exception": e.get_full_details()}, exc_info=True)
+            raise e # rethrow
         except Exception as e:
-            # translate unexpected exception into 500
-            print(f"Exception: {e}")
-            raise exceptions.APIException
+            logger.error(f"unexpected exception", exc_info=True, stack_info=True)
+            raise exceptions.APIException # translate unexpected exception into 500
         return response.Response(status=201, data=res_body)
