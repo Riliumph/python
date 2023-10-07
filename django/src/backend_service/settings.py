@@ -87,7 +87,7 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '5432',
         'OPTIONS': {
-            'options': '-c search_path=sample_service'
+            'options': '-c search_path=sample_app'
         },
         'ATOMIC_REQUESTS': True,
     }
@@ -181,16 +181,9 @@ LOGGING = {
             "level": "INFO",
             "propagate": False
         },
-        "sys": {
-            "handlers": [
-                "SizedSysFile"
-            ],
-            "level": "INFO",
-            "propagate": False
-        },
         # Django自身が出力するログ全般を拾うロガー
         'django': {
-            'handlers': ['file'],
+            'handlers': ['SizedSysFile'],
             'level': 'INFO',
             'propagate': False,
         },
