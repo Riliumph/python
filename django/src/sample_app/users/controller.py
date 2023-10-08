@@ -32,6 +32,22 @@ class GetUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
             user_id: url.pyにあるuser_idが入ってくる。
             引数に明示しなければ、kwargsに内包される。
         '''
+        logger.info("view receive a request of user deletion")
+        user_data = {"user_id": user_id}
+        try:
+            interactor = UserDeleteInteractor(UserRepository(UserEntity))
+            interactor(user_data)
+        except exceptions.APIException as e:
+            logger.error("rest_framework exception", extra={
+                         "exception": e.get_full_details()}, exc_info=True)
+            raise e
+        except UserEntity.DoesNotExist as e:
+            logger.error("not found", extra={"exception": e}, exc_info=True)
+            raise exceptions.NotFound
+        except Exception as e:
+            logger.error(f"unexpected exception",
+                         exc_info=True, stack_info=True)
+            raise exceptions.APIException
         return response.Response(status=200)
 
 
@@ -50,7 +66,7 @@ class GetAllCreate(generics.ListCreateAPIView):
         res = {}
         try:
             req_body = json.loads(request.body.decode("utf-8"))
-            interactor = UserCreateInteractor(UserRepository(None))
+            interactor = UserDeleteInteractor(UserRepository(UserEntity))
             res = interactor(req_body)
         except exceptions.APIException as e:
             logger.error("rest_framework exception", extra={
