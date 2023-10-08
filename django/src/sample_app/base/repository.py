@@ -1,0 +1,36 @@
+import abc
+from typing import List, Dict, Any
+
+from sample_app.base.entity import BaseEntity
+
+
+class BaseRepository(abc.ABC):
+    @abc.abstractmethod
+    def __init__(self, model_class: BaseEntity) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get(self, id: str) -> BaseEntity:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def all(self) -> List[BaseEntity]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def create(self, data: Dict[str, Any]) -> Dict[str, Any]:
+        '''新規データの作成関数
+        Returns:
+            int: serial型のID
+            str: uuid型のID
+            TODO: 型違いの挙動確認を行う
+        '''
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def update(self, data: Dict[str, Any]) -> None:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def delete(self, id: str) -> None:
+        raise NotImplementedError()
