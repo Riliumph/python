@@ -26,8 +26,12 @@ class GetUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     def update(self, request, *args, **kwargs):
         return super().update(request, *args, **kwargs)
 
-    def delete(self, request, *args, **kwargs):
-        # 論理削除を行う
+    def delete(self, request, user_id, **kwargs):
+        '''ユーザーを削除するAPI
+        Args:
+            user_id: url.pyにあるuser_idが入ってくる。
+            引数に明示しなければ、kwargsに内包される。
+        '''
         return response.Response(status=200)
 
 

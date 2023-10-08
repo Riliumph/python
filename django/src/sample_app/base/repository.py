@@ -7,6 +7,12 @@ from sample_app.base.entity import BaseEntity
 class BaseRepository(abc.ABC):
     @abc.abstractmethod
     def __init__(self, model_class: BaseEntity) -> None:
+        '''コンストラクタ
+        Args:
+            entity: Repositoryが用いるEntity
+            MockEntityを渡せるように引数で貰う。
+            = RepositoryMockは作らないということか
+        '''
         raise NotImplementedError()
 
     @abc.abstractmethod
