@@ -1,0 +1,41 @@
+from typing import List, Dict, Any
+
+from django.forms.models import model_to_dict
+
+from sample_app.base.repository import BaseRepository
+from sample_app.base.entity import BaseEntity
+
+from sample_app.users.entity import UserSerializer
+
+
+class UserRepository(BaseRepository):
+    def __init__(self, entity: BaseEntity):
+        self.entity = entity
+
+    def get(self,  id) -> BaseEntity:
+        return self.entity.objects.get(user_id=id)
+
+    def all(self) -> List[BaseEntity]:
+        return self.entity.objects.all()
+
+    def create(self, data: Dict[str, Any]):
+        '''Entityを新規作成する関数
+        Returns:
+            int: user_id
+        '''
+        s = UserSerializer(data=data)
+        s.is_valid(raise_exception=True)
+        return model_to_dict(s.save())
+
+    def update(self, user_id, data: Dict[str, Any]) -> None:
+        '''Entityを更新する関数
+        TODO: user_idなどread_onlyなカラムが更新されるか確認
+        '''
+        target = self.entity.objects.get(user_id=user_id)
+        self.serializer(instance=target, data=data, partial=True)
+        self.serializer.is_valid(raise_exception=True)
+        self.serializer.save()
+
+    def delete(self, id: int) -> None:
+        entity = self.entity.objects.get(user_id=id)
+        entity.delete()
