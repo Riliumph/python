@@ -87,7 +87,7 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '5432',
         'OPTIONS': {
-            'options': '-c search_path=sample_service'
+            'options': '-c search_path=sample_app'
         },
         'ATOMIC_REQUESTS': True,
     }
@@ -144,26 +144,26 @@ LOGGING = {
     "formatters": {
         "default": {
             "class": "logging.Formatter",
-            "format": "{asctime} {levelname} {message}",
+            "format": "{asctime} {levelname} {pathname} {lineno} {message}",
             "style": "{"
         },
         "json": {
             "()": "pythonjsonlogger.jsonlogger.JsonFormatter",
             "json_ensure_ascii": False,
-            "format": "{asctime} {levelname} {message}",
+            "format": "{asctime} {levelname} {pathname} {lineno} {message}",
             "style": "{"
         }
     },
     "handlers": {
         "SizedSysFile": {
             "class": "logging.handlers.RotatingFileHandler",
-            "filename": "sys.log",
+            "filename": f"{LOG_BASE_DIR}/sys.log",
             "maxBytes": 50000,
             "formatter": "json"
         },
         "SizedAppFile": {
             "class": "logging.handlers.RotatingFileHandler",
-            "filename": "app.log",
+            "filename": f"{LOG_BASE_DIR}/app.log",
             "maxBytes": 50000,
             "formatter": "json"
         },
@@ -181,16 +181,9 @@ LOGGING = {
             "level": "INFO",
             "propagate": False
         },
-        "sys": {
-            "handlers": [
-                "SizedSysFile"
-            ],
-            "level": "INFO",
-            "propagate": False
-        },
         # Django自身が出力するログ全般を拾うロガー
         'django': {
-            'handlers': ['file'],
+            'handlers': ['SizedSysFile'],
             'level': 'INFO',
             'propagate': False,
         },
