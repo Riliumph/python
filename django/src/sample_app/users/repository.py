@@ -1,7 +1,6 @@
 import logging
 from typing import List, Dict, Any
 
-from django.forms.models import model_to_dict
 
 from sample_app.base.repository import BaseRepository
 
@@ -15,29 +14,29 @@ class UserRepository(BaseRepository):
     def __init__(self, entity: UserEntity):
         self.entity = entity
 
-    def get(self,  id) -> UserEntity:
-        return self.entity.objects.get(user_id=id)
+    def get(self,  user_id) -> UserEntity:
+        return self.entity.objects.get(user_id=user_id)
 
     def all(self) -> List[UserEntity]:
-        return self.entity.objects.all()
+        return self.entity.objects.all().order_by("user_id")
 
-    def create(self, data: Dict[str, Any]):
+    def create(self, data: Dict[str, Any]) -> Any:
         '''Entityを新規作成する関数
         Returns:
             int: user_id
         '''
         s = UserSerializer(data=data)
         s.is_valid(raise_exception=True)
-        return model_to_dict(s.save())
+        return s.save()
 
     def update(self, user_id, data: Dict[str, Any]) -> None:
         '''Entityを更新する関数
         TODO: user_idなどread_onlyなカラムが更新されるか確認
         '''
         target = self.entity.objects.get(user_id=user_id)
-        self.serializer(instance=target, data=data, partial=True)
-        self.serializer.is_valid(raise_exception=True)
-        self.serializer.save()
+        s = UserSerializer(target, data=data)
+        s.is_valid(raise_exception=True)
+        return s.save()
 
     def delete(self, user_id: int) -> None:
         self.logger.info("repository send user deletion query to DB")
