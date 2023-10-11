@@ -8,7 +8,8 @@
     "[python]": {
         "editor.formatOnSave": true,
         "editor.formatOnType": true,
-        "editor.tabSize": 4
+        "editor.tabSize": 4,
+        "editor.defaultFormatter": "ms-python.autopep8"
     },
     "[json]": {
         "editor.defaultFormatter": "vscode.json-language-features",
@@ -20,5 +21,7 @@
     ],
     "python.analysis.extraPaths": [
         "/home/vscode/.local/lib/python3.11/site-packages"
-    ]
+    ],
+    "autoDocstring.quoteStyle": "'''",
+    "python.formatting.provider": "autopep8"
 }
