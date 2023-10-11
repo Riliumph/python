@@ -135,7 +135,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOG_BASE_DIR = "/opt/django/log"
+LOG_BASE_DIR = "./log"
 os.makedirs(LOG_BASE_DIR, exist_ok=True)
 
 LOGGING = {
