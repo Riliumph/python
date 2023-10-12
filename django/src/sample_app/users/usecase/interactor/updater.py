@@ -1,11 +1,10 @@
 import logging
-from typing import List, Dict, Any
+from typing import Any, Dict, List
 
 from django.forms.models import model_to_dict
 
-from sample_app.users.usecase.inputport import UserUpdaterIF
 from sample_app.users.repository import UserRepository
-from sample_app.users.entity import UserEntity, UserSerializer
+from sample_app.users.usecase.inputport import UserUpdaterIF
 
 
 class UserUpdater(UserUpdaterIF):

@@ -1,18 +1,15 @@
 import json
 import logging
 
-from django.forms.models import model_to_dict
 from django.db.utils import IntegrityError
-
-from rest_framework import (generics,
-                            exceptions, response)
+from rest_framework import exceptions, generics, response
 
 from sample_app.users.entity import *
-from sample_app.users.usecase.interactor.creator import *
-from sample_app.users.usecase.interactor.updater import *
-from sample_app.users.usecase.interactor.reader import *
-from sample_app.users.usecase.interactor.deleter import *
 from sample_app.users.repository import UserRepository
+from sample_app.users.usecase.interactor.creator import *
+from sample_app.users.usecase.interactor.deleter import *
+from sample_app.users.usecase.interactor.reader import *
+from sample_app.users.usecase.interactor.updater import *
 
 logger = logging.getLogger("app")
 

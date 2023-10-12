@@ -1,11 +1,8 @@
 import logging
-from typing import List, Dict, Any
-
+from typing import Any, Dict, List
 
 from sample_app.base.repository import BaseRepository
-
-from sample_app.users.entity import UserSerializer
-from sample_app.users.entity import UserEntity
+from sample_app.users.entity import UserEntity, UserSerializer
 
 
 class UserRepository(BaseRepository):
