@@ -1,6 +1,8 @@
 import logging
 from typing import Any, Dict, List
 
+from django.db.models import Q
+
 from sample_app.base.repository import BaseRepository
 from sample_app.users.entity import UserEntity, UserSerializer
 
@@ -43,3 +45,10 @@ class UserRepository(BaseRepository):
         self.logger.debug(f"{deleted_info}")
         self.logger.info("user was deleted",
                          extra={"details": {"user_id": user_id}})
+
+    def delete_by_ids(self, user_ids: List[int]):
+        or_condition = Q()
+        for user_id in user_ids:
+            or_condition |= Q(user_id=user_id)
+        deleted_info = self.entity.objects.filter(or_condition).delete()
+        self.logger.debug(f"{deleted_info}")

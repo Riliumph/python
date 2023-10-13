@@ -19,5 +19,4 @@ class UserDeleter(UserDeleterIF):
         self.repo.delete(user_id)
 
     def DeleteUsers(self, user_ids: List[int]):
-        for user_id in user_ids:
-            self.repo.delete(user_id)
+        self.repo.delete_by_ids(user_ids)
