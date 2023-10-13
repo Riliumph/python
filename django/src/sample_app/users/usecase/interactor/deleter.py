@@ -14,9 +14,22 @@ class UserDeleter(UserDeleterIF):
         self.repo = repo
 
     def DeleteUser(self, user_id: int):
-        self.logger.info("execute delete operation",
+        '''ユーザーを削除するビジネスロジック
+
+        Args:
+            user_id (int): ユーザーID
+        '''
+        self.logger.info("execute a delete operation",
                          extra={"details": {"user_id": user_id}})
         self.repo.delete(user_id)
 
     def DeleteUsers(self, user_ids: List[int]):
-        self.repo.delete_by_ids(user_ids)
+        '''ユーザーを一括削除するビジネスロジック
+            Repositoryがdelete関数でN件削除をサポートしている。
+            そのためDeleteUser関数と同じ実装だが、ビジネスロジックとしては分けておく。
+        Args:
+            user_ids (List[int]): ユーザーID群
+        '''
+        self.logger.info("execute delete operations",
+                         extra={"details": {"user_id": user_ids}})
+        self.repo.delete(user_ids)

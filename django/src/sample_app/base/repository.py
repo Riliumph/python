@@ -1,5 +1,5 @@
 import abc
-from typing import List, Dict, Any
+from typing import Any, Dict, List, Union
 
 from sample_app.base.entity import BaseEntity
 
@@ -34,9 +34,9 @@ class BaseRepository(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def update(self, data: Dict[str, Any]) -> None:
+    def update(self, id: int, data: Dict[str, Any]) -> None:
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def delete(self, id: str) -> None:
+    def delete(self, id: Union[int, List[int]]) -> None:
         raise NotImplementedError()

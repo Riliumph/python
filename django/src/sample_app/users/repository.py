@@ -1,5 +1,5 @@
 import logging
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Union
 
 from django.db.models import Q
 
@@ -37,18 +37,19 @@ class UserRepository(BaseRepository):
         s.is_valid(raise_exception=True)
         return s.save()
 
-    def delete(self, user_id: int) -> None:
-        self.logger.info("repository send user deletion query to DB")
-        entity = self.entity.objects.get(user_id=user_id)
-        deleted_info = entity.delete()
-        # return deleted count & type as tuple
-        self.logger.debug(f"{deleted_info}")
-        self.logger.info("user was deleted",
-                         extra={"details": {"user_id": user_id}})
+    def delete(self, user_ids: Union[int, List[int]]):
+        '''Entityを削除する関数
+           PythonではOverload機能がないため、複数を前提に実装する。
 
-    def delete_by_ids(self, user_ids: List[int]):
+        Args:
+            user_ids (Union[int, List[int]]): ユーザーID
+        '''
+        self.logger.info("repository send user deletion query to DB")
         or_condition = Q()
         for user_id in user_ids:
             or_condition |= Q(user_id=user_id)
         deleted_info = self.entity.objects.filter(or_condition).delete()
+        # return deleted count & type as tuple
         self.logger.debug(f"{deleted_info}")
+        self.logger.info("user was deleted",
+                         extra={"details": {"user_id": user_ids}})
