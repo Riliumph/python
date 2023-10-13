@@ -25,5 +25,8 @@
         "/home/vscode/.local/lib/python3.11/site-packages"
     ],
     "python.formatting.provider": "autopep8",
-    "sql-formatter.uppercase": true
+    "sql-formatter.uppercase": true,
+    "cSpell.words": [
+        "interactor"
+    ]
 }
