@@ -38,6 +38,8 @@ class UserRepository(BaseRepository):
     def delete(self, user_id: int) -> None:
         self.logger.info("repository send user deletion query to DB")
         entity = self.entity.objects.get(user_id=user_id)
-        entity.delete()
+        deleted_info = entity.delete()
+        # return deleted count & type as tuple
+        self.logger.debug(f"{deleted_info}")
         self.logger.info("user was deleted",
                          extra={"details": {"user_id": user_id}})

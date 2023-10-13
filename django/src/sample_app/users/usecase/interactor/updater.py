@@ -3,6 +3,7 @@ from typing import Any, Dict, List
 
 from django.forms.models import model_to_dict
 
+from sample_app.users.presenter import UserPresenter
 from sample_app.users.repository import UserRepository
 from sample_app.users.usecase.inputport import UserUpdaterIF
 
@@ -13,7 +14,7 @@ class UserUpdater(UserUpdaterIF):
     def __init__(self, repo: UserRepository) -> None:
         self.repo = repo
 
-    def UpdateUser(self, user_id: int, data: Dict[str, Any]) -> Dict[str, Any]:
+    def UpdateUser(self, user_id: int, data: Dict[str, Any]) -> UserPresenter:
         '''更新ビジネスロジック
 
         Args:
@@ -25,8 +26,7 @@ class UserUpdater(UserUpdaterIF):
         '''
         self.logger.info("execute update operation",
                          extra={"details": data})
-        response = self.repo.update(user_id, data)
-        return model_to_dict(response)
+        return UserPresenter(self.repo.update(user_id, data))
 
     def UpdateUsers(self, user_ids: List[int], data: List[Dict[str, Any]]):
         return super().UpdateUsers(data)

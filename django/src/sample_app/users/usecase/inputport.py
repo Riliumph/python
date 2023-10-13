@@ -1,7 +1,8 @@
 import abc
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Tuple
 
 from sample_app.base.repository import BaseRepository
+from sample_app.users.entity import UserEntity
 
 # 思いつくまま便利そうなInputPortを書いてみる
 
@@ -26,7 +27,7 @@ class UserReaderIF(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def ReadUserById(self, data: int):
+    def ReadUserById(self, data: int) -> Tuple[int, UserEntity]:
         raise NotImplementedError()
 
 

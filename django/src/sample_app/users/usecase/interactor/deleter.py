@@ -16,8 +16,7 @@ class UserDeleter(UserDeleterIF):
     def DeleteUser(self, user_id: int):
         self.logger.info("execute delete operation",
                          extra={"details": {"user_id": user_id}})
-        response = self.repo.delete(user_id)
-        return response
+        self.repo.delete(user_id)
 
     def DeleteUsers(self, user_ids: List[int]):
         for user_id in user_ids:

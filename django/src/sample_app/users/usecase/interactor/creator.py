@@ -3,6 +3,7 @@ from typing import Any, Dict, List
 
 from django.forms.models import model_to_dict
 
+from sample_app.users.presenter import UserPresenter
 from sample_app.users.repository import UserRepository
 from sample_app.users.usecase.inputport import UserCreatorIF
 
@@ -13,11 +14,10 @@ class UserCreator(UserCreatorIF):
     def __init__(self, repo: UserRepository) -> None:
         self.repo = repo
 
-    def CreateUser(self, data: Dict[str, Any]) -> Dict[str, Any]:
+    def CreateUser(self, data: Dict[str, Any]) -> UserPresenter:
         self.logger.info("execute create operation",
                          extra={"details": data})
-        response = self.repo.create(data)
-        return model_to_dict(response)
+        return UserPresenter(self.repo.create(data))
 
-    def CreateUsers(self, data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    def CreateUsers(self, data: List[Dict[str, Any]]) -> List[UserPresenter]:
         return super().CreateUsers(data)
