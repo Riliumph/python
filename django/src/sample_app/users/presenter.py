@@ -1,5 +1,5 @@
 
-from typing import Any, Dict
+from typing import Any, Dict, List, Union
 
 from django.forms.models import model_to_dict
 
@@ -14,5 +14,7 @@ class UserPresenter(BaseOutputPort):
     def __init__(self, entity: UserEntity) -> None:
         self.entity = entity
 
-    def ToJson(self) -> Dict[str, Any]:
+    def ToJson(self) -> Union[Dict[str, Any], List[Dict[str, Any]]]:
+        if isinstance(self.entity, list):
+            return [model_to_dict(e) for e in self.entity]
         return model_to_dict(self.entity)
