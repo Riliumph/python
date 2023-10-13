@@ -24,7 +24,7 @@ class BaseRepository(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def create(self, data: Dict[str, Any]) -> Dict[str, Any]:
+    def create(self, data: Union[Dict[str, Any], List[Dict[str, Any]]]) -> Dict[str, Any]:
         '''新規データの作成関数
         Returns:
             int: serial型のID
