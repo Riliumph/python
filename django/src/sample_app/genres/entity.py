@@ -4,6 +4,8 @@ from rest_framework import serializers
 
 from sample_app.base.entity import BaseEntity
 
+# from sample_app.books.entity import BookEntity, BookGenreEntity
+
 
 class GenreEntity(BaseEntity):
     genre_id = models.AutoField(primary_key=True)
