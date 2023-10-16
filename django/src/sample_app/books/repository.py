@@ -8,8 +8,15 @@ from sample_app.books.entity import *
 class BookRepository(BaseRepository):
     logger = logging.getLogger("app")
 
-    def __init__(self, entity: BookEntity):
-        self.entity = entity
+    def __init__(self, entity: [BookEntity, BookSerializer]):
+        if isinstance(entity, BookEntity):
+            self.entity = entity
+            self.serializer = None
+        elif isinstance(entity, (BookSerializer)):
+            self.entity = entity.Meta.model
+            self.serializer = entity
+        else:
+            raise ValueError(f"not support entity type({type(entity)})")
 
     def get(self,  book_id) -> BookEntity:
         return self.entity.objects.get(book_id=book_id)
@@ -22,16 +29,15 @@ class BookRepository(BaseRepository):
         Returns:
             int: user_id
         '''
-        s = UserSerializer(data=data)
-        s.is_valid(raise_exception=True)
-        return s.save()
+        self.serializer.is_valid(raise_exception=True)
+        return self.serializer.save()
 
     def update(self, user_id, data: Dict[str, Any]) -> None:
         '''Entityを更新する関数
         TODO: user_idなどread_onlyなカラムが更新されるか確認
         '''
         target = self.entity.objects.get(user_id=user_id)
-        s = UserSerializer(target, data=data)
+        s = BookSerializer(target, data=data)  # targetが必要なので、依存してしまう
         s.is_valid(raise_exception=True)
         return s.save()
 

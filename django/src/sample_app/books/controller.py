@@ -1,6 +1,7 @@
 import json
 import logging
 
+from django.forms.models import model_to_dict
 from rest_framework import exceptions, generics, request, response
 
 from sample_app.books.entity import BookEntity, BookSerializer
@@ -47,16 +48,18 @@ class GetAllCreate(generics.ListCreateAPIView):
 class BookGenreGetAllCreate(generics.ListCreateAPIView):
     '''本に付属するジャンル情報を取得・付与を行うAPI
     '''
-    serializer_class = GenreSerializer
-    lookup_field = GenreEntity._meta.pk.name
+    serializer_class = BookSerializer
+    lookup_field = BookEntity._meta.pk.name
 
     def get_queryset(self):
         return GenreEntity.objects.all().order_by(self.lookup_field)
 
     def get(self, request, book_id, *args, **kwargs):
+        res = {}
         try:
             logger.info("show variable", extra={
                         "details": kwargs, "book_id": book_id})
+            res = model_to_dict(BookEntity.objects.get(book_id=book_id))
         except exceptions.APIException as e:
             logger.error("rest_framework exception", extra={
                          "exception": e.get_full_details()}, exc_info=True)
@@ -65,7 +68,7 @@ class BookGenreGetAllCreate(generics.ListCreateAPIView):
             logger.error(f"unexpected exception",
                          exc_info=True, stack_info=True)
             raise exceptions.APIException  # translate unexpected exception into 500
-        return response.Response(status=200, data=kwargs)
+        return response.Response(status=200, data=res)
 
     def post(self, request, book_id, *args, **kwargs):
         # 引数チェックのみ
