@@ -2,7 +2,7 @@ import logging
 
 from rest_framework import generics
 
-from sample_app.genres.entity import *
+from sample_app.genres.entity import GenreEntity, GenreSerializer
 
 logger = logging.getLogger("app")
 

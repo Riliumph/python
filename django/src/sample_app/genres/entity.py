@@ -1,6 +1,7 @@
 
 from django.db import models
 from rest_framework import serializers
+from rest_framework.fields import empty
 
 from sample_app.base.entity import BaseEntity
 
@@ -16,6 +17,17 @@ class GenreEntity(BaseEntity):
 
 
 class GenreSerializer(serializers.ModelSerializer):
+    def __init__(self, *args, **kwargs):
+        '''コンストラクタ
+        attention:
+        スニペット補完を使ってserializers.ModelSerializerのコンストラクタをコピーしてくると正しく動作しなくなる。
+        引数の定義を`*args`にして再定義すること。
+        '''
+        # BookSerializerから参照できるようにインスタンス変数に登録する
+        if "read_only" in kwargs.keys():
+            self.read_only = kwargs.get("read_only")
+        super().__init__(*args, **kwargs)
+
     class Meta:
         model = GenreEntity
         fields = '__all__'
