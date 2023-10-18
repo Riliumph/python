@@ -1,17 +1,15 @@
 import logging
 from typing import Any, Dict, List
 
-from django.forms.models import model_to_dict
+from user.gateway import UserRepository as UserRepo
+from user.presenter import UserPresenter
+from user.usecase.creator import inputport
 
-from user.gateway.user_repository import UserRepository
-from user.presenter.user import UserPresenter
-from user.usecase.inputport import UserCreatorIF
+logger = logging.getLogger("app")
 
 
-class UserCreator(UserCreatorIF):
-    logger = logging.getLogger("app")
-
-    def __init__(self, repo: UserRepository) -> None:
+class UserCreator(inputport.UserCreator):
+    def __init__(self, repo: UserRepo):
         self.repo = repo
 
     def CreateUser(self, data: Dict[str, Any]) -> UserPresenter:
@@ -26,8 +24,8 @@ class UserCreator(UserCreatorIF):
         Returns:
             UserPresenter: 作成したユーザー情報
         '''
-        self.logger.info("execute a create operation",
-                         extra={"details": data})
+        logger.info("execute a create operation",
+                    extra={"details": data})
         return UserPresenter(self.repo.create(data))
 
     def CreateUsers(self, data: List[Dict[str, Any]]) -> List[UserPresenter]:
@@ -42,6 +40,6 @@ class UserCreator(UserCreatorIF):
         Returns:
             List[UserPresenter]: 作成したユーザー情報群
         '''
-        self.logger.info("execute create operations",
-                         extra={"details": data})
+        logger.info("execute create operations",
+                    extra={"details": data})
         return UserPresenter(self.repo.create(data))

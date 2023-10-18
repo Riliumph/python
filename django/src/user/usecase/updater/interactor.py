@@ -1,21 +1,19 @@
 import logging
 from typing import Any, Dict, List
 
-from django.forms.models import model_to_dict
+from user.gateway import UserRepository as UserRepo
+from user.presenter import UserPresenter
+from user.usecase.updater import inputport
 
-from user.gateway.user_repository import UserRepository
-from user.presenter.user import UserPresenter
-from user.usecase.inputport import UserUpdaterIF
+logger = logging.getLogger("app")
 
 
-class UserUpdater(UserUpdaterIF):
-    logger = logging.getLogger("app")
-
-    def __init__(self, repo: UserRepository) -> None:
+class UserUpdater(inputport.UserUpdater):
+    def __init__(self, repo: UserRepo):
         self.repo = repo
 
     def UpdateUser(self, user_id: int, data: Dict[str, Any]) -> UserPresenter:
-        '''更新ビジネスロジック
+        '''ユーザーを更新するビジネスロジック
 
         Args:
             user_id (int): 更新対象のユーザーID
@@ -24,8 +22,8 @@ class UserUpdater(UserUpdaterIF):
         Returns:
             Dict[str, Any]: 更新結果
         '''
-        self.logger.info("execute update operation",
-                         extra={"details": data})
+        logger.info("execute a update operation",
+                    extra={"details": data})
         return UserPresenter(self.repo.update(user_id, data))
 
     def UpdateUsers(self, user_ids: List[int], data: List[Dict[str, Any]]):

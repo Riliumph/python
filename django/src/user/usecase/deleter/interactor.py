@@ -1,16 +1,14 @@
 import logging
-from typing import Any, Dict, List
+from typing import List
 
-from django.forms.models import model_to_dict
+from user.gateway import UserRepository as UserRepo
+from user.usecase.deleter import inputport
 
-from user.gateway.user_repository import UserRepository
-from user.usecase.inputport import UserDeleterIF
+logger = logging.getLogger("app")
 
 
-class UserDeleter(UserDeleterIF):
-    logger = logging.getLogger("app")
-
-    def __init__(self, repo: UserRepository) -> None:
+class UserDeleter(inputport.UserDeleter):
+    def __init__(self, repo: UserRepo):
         self.repo = repo
 
     def DeleteUser(self, user_id: int):
@@ -19,8 +17,8 @@ class UserDeleter(UserDeleterIF):
         Args:
             user_id (int): ユーザーID
         '''
-        self.logger.info("execute a delete operation",
-                         extra={"details": {"user_id": user_id}})
+        logger.info("execute a delete operation",
+                    extra={"details": {"user_id": user_id}})
         self.repo.delete(user_id)
 
     def DeleteUsers(self, user_ids: List[int]):
@@ -30,6 +28,6 @@ class UserDeleter(UserDeleterIF):
         Args:
             user_ids (List[int]): ユーザーID群
         '''
-        self.logger.info("execute delete operations",
-                         extra={"details": {"user_id": user_ids}})
+        logger.info("execute delete operations",
+                    extra={"details": {"user_id": user_ids}})
         self.repo.delete(user_ids)

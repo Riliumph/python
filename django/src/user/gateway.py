@@ -4,15 +4,14 @@ from typing import Any, Dict, List, Union
 from django.db.models import Q
 
 from sample_app.base.repository import BaseRepository
-from user.entity.user import *
+from user.entity import *
 
 logger = logging.getLogger("app")
 
 
 class UserRepository(BaseRepository):
-
-    def __init__(self, entity: [UserEntity, UserSerializer]):
-        if isinstance(entity, UserEntity):
+    def __init__(self, entity: [User, UserSerializer]):
+        if isinstance(entity, User):
             self.entity = entity
             self.serializer = None
         elif isinstance(entity, (UserSerializer, UserListSerializer)):
@@ -21,13 +20,15 @@ class UserRepository(BaseRepository):
         else:
             raise ValueError(f"not support entity type({type(entity)})")
 
-    def get(self,  user_id) -> UserEntity:
+    def get(self,  user_id) -> User:
+        logger.info("user repository send select query")
         return self.entity.objects.get(user_id=user_id)
 
-    def all(self) -> List[UserEntity]:
+    def all(self) -> List[User]:
+        logger.info("user repository send select query")
         return self.entity.objects.all().order_by(self.entity._meta.pk.name)
 
-    def create(self, data: Dict[str, Any]) -> List[UserEntity]:
+    def create(self, data: Dict[str, Any]) -> List[User]:
         '''Entityを新規作成する関数
         ListSerializerでコンストラクトすることで複数データを一括作成することが可能。
         ListSerializerにはbulk_createを用いて一括作成をサポートしたcreate関数が定義されている必要がある。
@@ -43,10 +44,12 @@ class UserRepository(BaseRepository):
         '''Entityを更新する関数
         TODO: user_idなどread_onlyなカラムが更新されるか確認
         '''
+        logger.info("user repository send update query")
         target = self.entity.objects.get(user_id=user_id)
-        s = UserSerializer(target, data=data)
-        s.is_valid(raise_exception=True)
-        return s.save()
+        # 更新対象と更新後データでシリアライザを作り直す必要がある。
+        self.serializer = UserSerializer(target, data=data)
+        self.serializer.is_valid(raise_exception=True)
+        return self.serializer.save()
 
     def delete(self, user_ids: Union[int, List[int]]):
         '''Entityを削除する関数
@@ -55,7 +58,7 @@ class UserRepository(BaseRepository):
         Args:
             user_ids (Union[int, List[int]]): ユーザーID
         '''
-        logger.info("repository send user deletion query to DB")
+        logger.info("user repository send delete query")
         or_condition = Q()
         for user_id in user_ids:
             or_condition |= Q(user_id=user_id)

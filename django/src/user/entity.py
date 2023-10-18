@@ -8,7 +8,7 @@ from sample_app.base.entity import BaseEntity
 TABLE_NAME = "users"
 
 
-class UserEntity(BaseEntity):
+class User(BaseEntity):
     user_id = models.AutoField(primary_key=True)
     user_name = models.TextField(null=False)
 
@@ -21,7 +21,7 @@ class UserListSerializer(serializers.ListSerializer):
     UserSerializerのインスタンス化に際して、「many=True」が指定されるとListSerializerでインスタンス化される。
     '''
 
-    def create(self, validated_data: List[Dict[str, Any]]) -> List[UserEntity]:
+    def create(self, validated_data: List[Dict[str, Any]]) -> List[User]:
         '''DBへinsertクエリを送信する関数
         ユーザー情報をトランザクション中に一回のクエリで実行することで高速に作成する。
 
@@ -31,11 +31,11 @@ class UserListSerializer(serializers.ListSerializer):
         Returns:
             List[UserEntity]: 作成したユーザー情報
         '''
-        data = [UserEntity(**vd) for vd in validated_data]
-        return UserEntity.objects.bulk_create(data)
+        data = [User(**vd) for vd in validated_data]
+        return User.objects.bulk_create(data)
 
     class Meta:
-        model = UserEntity
+        model = User
         fields = '__all__'
 
 
@@ -43,6 +43,6 @@ class UserSerializer(serializers.ModelSerializer):
     '''Userのシリアライザー
     '''
     class Meta:
-        model = UserEntity
+        model = User
         fields = '__all__'
         list_serializer_class = UserListSerializer
