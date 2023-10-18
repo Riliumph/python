@@ -3,8 +3,8 @@ from typing import Any, Dict, List
 
 from django.forms.models import model_to_dict
 
-from sample_app.users.repository import UserRepository
-from sample_app.users.usecase.inputport import UserDeleterIF
+from user.gateway.user_repository import UserRepository
+from user.usecase.inputport import UserDeleterIF
 
 
 class UserDeleter(UserDeleterIF):

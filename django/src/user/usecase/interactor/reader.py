@@ -1,8 +1,8 @@
 import logging
 
-from sample_app.users.presenter import UserPresenter
-from sample_app.users.repository import UserRepository
-from sample_app.users.usecase.inputport import UserReaderIF
+from user.gateway.user_repository import UserRepository
+from user.presenter.user import UserPresenter
+from user.usecase.inputport import UserReaderIF
 
 
 class UserReader(UserReaderIF):

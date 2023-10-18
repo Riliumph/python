@@ -4,12 +4,12 @@ import logging
 from django.db.utils import IntegrityError
 from rest_framework import exceptions, generics, request, response
 
-from sample_app.users.entity import *
-from sample_app.users.repository import UserRepository as UserRepo
-from sample_app.users.usecase.interactor.creator import *
-from sample_app.users.usecase.interactor.deleter import *
-from sample_app.users.usecase.interactor.reader import *
-from sample_app.users.usecase.interactor.updater import *
+from user.entity.user import *
+from user.gateway.user_repository import UserRepository as UserRepo
+from user.usecase.interactor.creator import *
+from user.usecase.interactor.deleter import *
+from user.usecase.interactor.reader import *
+from user.usecase.interactor.updater import *
 
 logger = logging.getLogger("app")
 

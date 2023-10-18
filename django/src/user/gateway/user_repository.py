@@ -4,7 +4,7 @@ from typing import Any, Dict, List, Union
 from django.db.models import Q
 
 from sample_app.base.repository import BaseRepository
-from sample_app.users.entity import *
+from user.entity.user import *
 
 logger = logging.getLogger("app")
 
@@ -61,6 +61,6 @@ class UserRepository(BaseRepository):
             or_condition |= Q(user_id=user_id)
         deleted_info = self.entity.objects.filter(or_condition).delete()
         # return deleted count & type as tuple
-        self.logger.debug(f"{deleted_info}")
-        self.logger.info("user was deleted",
-                         extra={"details": {"user_id": user_ids}})
+        logger.debug(f"{deleted_info}")
+        logger.info("user was deleted",
+                    extra={"details": {"user_id": user_ids}})

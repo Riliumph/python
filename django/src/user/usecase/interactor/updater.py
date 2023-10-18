@@ -3,9 +3,9 @@ from typing import Any, Dict, List
 
 from django.forms.models import model_to_dict
 
-from sample_app.users.presenter import UserPresenter
-from sample_app.users.repository import UserRepository
-from sample_app.users.usecase.inputport import UserUpdaterIF
+from user.gateway.user_repository import UserRepository
+from user.presenter.user import UserPresenter
+from user.usecase.inputport import UserUpdaterIF
 
 
 class UserUpdater(UserUpdaterIF):

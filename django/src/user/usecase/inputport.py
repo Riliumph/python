@@ -2,7 +2,7 @@ import abc
 from typing import Any, Dict, List, Tuple
 
 from sample_app.base.repository import BaseRepository
-from sample_app.users.entity import UserEntity
+from user.entity.user import UserEntity
 
 # 思いつくまま便利そうなInputPortを書いてみる
 
