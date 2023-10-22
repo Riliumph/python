@@ -1,6 +1,6 @@
-from django.urls import path, include
-from sample_app.users import views
+from django.urls import include, path
 
 urlpatterns = [
-    path('v1/users', views.UsersGetAllOrPost.as_view()),
+    path('v1/genres/', include("sample_app.genres.urls")),
+    path('v1/books/', include("sample_app.books.urls")),
 ]

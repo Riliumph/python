@@ -5,20 +5,30 @@
     "[dockerfile]": {
         "editor.defaultFormatter": "ms-azuretools.vscode-docker"
     },
-    "[python]": {
-        "editor.formatOnSave": true,
-        "editor.formatOnType": true,
-        "editor.tabSize": 4
-    },
     "[json]": {
         "editor.defaultFormatter": "vscode.json-language-features",
         "editor.tabSize": 2
     },
-    "sql-formatter.uppercase": true,
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.autopep8",
+        "editor.formatOnSave": true,
+        "editor.tabSize": 4
+    },
+    "autoDocstring.quoteStyle": "'''",
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    },
+    "python.analysis.extraPaths": [
+        "/home/vscode/.local/lib/python3.11/site-packages"
+    ],
     "python.autoComplete.extraPaths": [
         "/home/vscode/.local/lib/python3.11/site-packages"
     ],
-    "python.analysis.extraPaths": [
-        "/home/vscode/.local/lib/python3.11/site-packages"
+    "python.formatting.provider": "autopep8",
+    "sql-formatter.uppercase": true,
+    "cSpell.words": [
+        "inputport",
+        "interactor",
+        "usecase"
     ]
 }
