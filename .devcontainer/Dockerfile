@@ -1,5 +1,10 @@
 FROM mcr.microsoft.com/devcontainers/python:3.11-bullseye
 
+# Selenium用にGoogle Chromeをaptで入れられる設定を入れる。
+# ただし、aptでGoogle Chromeを入れるとエラーが発生するので手動で入れる
+RUN curl -Lks https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -\
+    && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
+
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y\
     peco\
