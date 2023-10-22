@@ -1,13 +1,1 @@
-{
-    "[python]": {
-        "editor.formatOnSave": true,
-        "editor.tabSize": 4
-    },
-    "[json]": {
-        "editor.defaultFormatter": "vscode.json-language-features",
-        "editor.tabSize": 2
-    },
-    "python.analysis.extraPaths": [
-        "/home/vscode/.local/lib/python3.11/site-packages"
-    ]
-}
+../../.vscode/settings.json
