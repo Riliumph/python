@@ -27,6 +27,8 @@
     "python.formatting.provider": "autopep8",
     "sql-formatter.uppercase": true,
     "cSpell.words": [
-        "interactor"
+        "inputport",
+        "interactor",
+        "usecase"
     ]
 }
