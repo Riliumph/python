@@ -23,6 +23,7 @@
     "editor.codeActionsOnSave": {
         "source.organizeImports": true
     },
+    "jupyter.askForKernelRestart": false,
     "notebook.cellToolbarVisibility": "hover",
     "notebook.formatOnSave.enabled": true,
     "notebook.output.scrolling": true,
