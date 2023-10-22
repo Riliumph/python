@@ -3,7 +3,7 @@ from typing import Any, Dict, List, Union
 
 from django.forms.models import model_to_dict
 
-from sample_app.base.outputport import BaseOutputPort
+from base.outputport import BaseOutputPort
 from sample_app.books.entity import BookEntity
 
 

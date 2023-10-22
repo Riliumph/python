@@ -3,7 +3,7 @@ from typing import Any, Dict, List
 from django.db import models
 from rest_framework import serializers
 
-from sample_app.base.entity import BaseEntity
+from base.entity import BaseEntity
 
 TABLE_NAME = "users"
 

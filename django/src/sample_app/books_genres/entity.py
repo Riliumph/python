@@ -1,7 +1,7 @@
 from django.db import models
 from rest_framework import serializers
 
-from sample_app.base.entity import BaseEntity
+from base.entity import BaseEntity
 
 # Book->BookGenre<-Genreの多対多関係を構築する時に遅延評価するため必要ない
 # from sample_app.books.entity import BookEntity

@@ -5,7 +5,7 @@ from django.db import models
 from rest_framework import serializers
 from rest_framework.fields import empty
 
-from sample_app.base.entity import BaseEntity
+from base.entity import BaseEntity
 from sample_app.books_genres.entity import BookGenreEntity, BookGenreSerializer
 from sample_app.genres.entity import GenreEntity, GenreSerializer
 

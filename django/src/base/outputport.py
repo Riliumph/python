@@ -1,7 +1,7 @@
 import abc
 from typing import Any, Dict
 
-from sample_app.base.entity import BaseEntity
+from base.entity import BaseEntity
 
 
 class BaseOutputPort(abc.ABC):

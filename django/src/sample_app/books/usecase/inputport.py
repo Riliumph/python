@@ -1,7 +1,7 @@
 import abc
 from typing import Any, Dict, List
 
-from sample_app.base.repository import BaseRepository
+from base.gateway import BaseRepository
 
 # 思いつくまま便利そうなInputPortを書いてみる
 

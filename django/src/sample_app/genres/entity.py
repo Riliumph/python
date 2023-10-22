@@ -3,7 +3,7 @@ from django.db import models
 from rest_framework import serializers
 from rest_framework.fields import empty
 
-from sample_app.base.entity import BaseEntity
+from base.entity import BaseEntity
 
 # from sample_app.books.entity import BookEntity, BookGenreEntity
 

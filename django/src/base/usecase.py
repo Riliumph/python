@@ -1,7 +1,7 @@
 import abc
 from typing import Any, Dict
 
-from sample_app.base.repository import BaseRepository
+from base.gateway import BaseRepository
 
 
 class BaseInputPort(abc.ABC):

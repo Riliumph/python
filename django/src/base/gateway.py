@@ -1,7 +1,7 @@
 import abc
 from typing import Any, Dict, List, Union
 
-from sample_app.base.entity import BaseEntity
+from base.entity import BaseEntity
 
 
 class BaseRepository(abc.ABC):

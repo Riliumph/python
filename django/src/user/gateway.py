@@ -3,7 +3,7 @@ from typing import Any, Dict, List, Union
 
 from django.db.models import Q
 
-from sample_app.base.repository import BaseRepository
+from base.gateway import BaseRepository
 from user.entity import *
 
 logger = logging.getLogger("app")

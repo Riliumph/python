@@ -1,7 +1,7 @@
 import logging
 from typing import Any, Dict, List
 
-from sample_app.base.repository import BaseRepository
+from base.gateway import BaseRepository
 from sample_app.books.entity import *
 
 
