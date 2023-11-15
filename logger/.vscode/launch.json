@@ -5,10 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Current File",
+            "name": "debug",
             "type": "python",
             "request": "launch",
+            "cwd": "${workspaceFolder}",
             "program": "${workspaceFolder}/src/main.py",
+            "args": [],
+            "console": "integratedTerminal",
             "justMyCode": true
         }
     ]

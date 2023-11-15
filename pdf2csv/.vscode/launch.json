@@ -5,10 +5,15 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Current File",
+            "name": "debug",
             "type": "python",
             "request": "launch",
+            "cwd": "${workspaceFolder}",
             "program": "${workspaceFolder}/src/main.py",
+            "args": [
+                "target.pdf"
+            ],
+            "console": "integratedTerminal",
             "justMyCode": true
         }
     ]
