@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/python:3.11-bullseye
+FROM mcr.microsoft.com/devcontainers/python:3
 
 # Selenium用にGoogle Chromeをaptで入れられる設定を入れる。
 # ただし、aptでGoogle Chromeを入れるとエラーが発生するので手動で入れる
@@ -29,14 +29,3 @@ RUN make\
 WORKDIR /root
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
-
-# New user
-USER 1000
-WORKDIR /home/vscode
-
-
-# Completion for Bash 5.1.4(Resolve at Bash 5.2.1)
-RUN { \
-    echo "source /usr/share/bash-completion/completions/docker"; \
-    pip completion --bash;\
-    } >> ~/.bashrc
