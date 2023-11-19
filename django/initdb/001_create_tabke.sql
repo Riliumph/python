@@ -3,6 +3,8 @@ CREATE SCHEMA sample_app;
 CREATE TABLE sample_app.users (
     user_id serial PRIMARY KEY,
     user_name text NOT NULL,
+    age integer NOT NULL,
+    enrollment_day timestamptz DEFAULT CURRENT_TIMESTAMP,
     created_at timestamptz DEFAULT CURRENT_TIMESTAMP,
     updated_at timestamptz DEFAULT CURRENT_TIMESTAMP
 );
@@ -67,12 +69,12 @@ CREATE TABLE sample_app.issue_items(
 );
 
 INSERT INTO
-    sample_app.users(user_name)
+    sample_app.users(user_name, age)
 VALUES
-    ('渋谷ユウト'),
-    ('大崎トシコ'),
-    ('大塚ミチオ'),
-    ('品川マコト');
+    ('渋谷ユウト', 13),
+    ('大崎トシコ', 12),
+    ('大塚ミチオ', 22),
+    ('品川マコト', 30);
 
 INSERT INTO
     sample_app.books(

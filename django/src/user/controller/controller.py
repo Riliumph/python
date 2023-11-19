@@ -17,6 +17,7 @@ logger = logging.getLogger("app")
 
 class GetUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     '''ユーザーの取得・更新・削除API
+        なぜかテキストボックスに表示されない
     '''
     # GenericApiView member
     serializer_class = UserSerializer
@@ -43,7 +44,7 @@ class GetUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
             logger.error(f"unexpected exception",
                          exc_info=True, stack_info=True)
             raise exceptions.APIException
-        return response.Response(status=201, data=presenter.ToJson())
+        return response.Response(status=200, data=presenter.ToJson())
 
     def update(self, request: request, user_id, *args, **kwargs):
         '''ユーザー情報を更新するAPI
