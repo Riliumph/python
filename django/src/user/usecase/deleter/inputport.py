@@ -1,7 +1,7 @@
 import abc
 from typing import List
 
-from user.gateway import UserRepository as UserRepo
+from user.gateway.repository import UserRepository as UserRepo
 
 
 class UserDeleter(abc.ABC):

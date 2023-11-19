@@ -4,8 +4,9 @@ import logging
 from django.db.utils import IntegrityError
 from rest_framework import exceptions, generics, request, response
 
-from user.entity import *
-from user.gateway import UserRepository as UserRepo
+from user.entity.model import *
+from user.entity.validator import *
+from user.gateway.repository import UserRepository as UserRepo
 from user.usecase.creator.interactor import *
 from user.usecase.deleter.interactor import *
 from user.usecase.reader.interactor import *

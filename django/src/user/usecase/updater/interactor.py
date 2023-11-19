@@ -1,8 +1,8 @@
 import logging
 from typing import Any, Dict, List
 
-from user.gateway import UserRepository as UserRepo
-from user.presenter import UserPresenter
+from user.gateway.repository import UserRepository as UserRepo
+from user.presenter.presenter import UserPresenter
 from user.usecase.updater import inputport
 
 logger = logging.getLogger("app")

@@ -4,7 +4,7 @@ from typing import Any, Dict, List, Union
 from django.forms.models import model_to_dict
 
 from base.outputport import BaseOutputPort
-from user.entity import User
+from user.entity.model import User
 
 
 class UserPresenter(BaseOutputPort):

@@ -4,7 +4,8 @@ from typing import Any, Dict, List, Union
 from django.db.models import Q
 
 from base.gateway import BaseRepository
-from user.entity import *
+from user.entity.model import User
+from user.entity.validator import *
 
 logger = logging.getLogger("app")
 

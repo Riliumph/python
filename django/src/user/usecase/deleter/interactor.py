@@ -1,7 +1,7 @@
 import logging
 from typing import List
 
-from user.gateway import UserRepository as UserRepo
+from user.gateway.repository import UserRepository as UserRepo
 from user.usecase.deleter import inputport
 
 logger = logging.getLogger("app")
