@@ -47,8 +47,8 @@ class GetAllCreate(generics.ListCreateAPIView):
             logger.info(type(request))
             req_body = json.loads(request.body.decode("utf-8"))
             user_id = req_body
-            interactor = UserCreator(
-                UserRepo(self.get_serializer(data=user_id)))
+            data = self.get_serializer(data=user_id)
+            interactor = UserCreator(UserRepo(data))
             presenter = interactor.CreateUser(user_id)
         except exceptions.APIException as e:
             logger.error("rest_framework exception", extra={

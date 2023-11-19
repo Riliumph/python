@@ -34,7 +34,7 @@ class GetUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
         logger.info("controller receive a get user request")
         presenter = None
         try:
-            interactor = UserReader(UserRepo(User))
+            interactor = UserReader(UserRepo(User()))
             presenter = interactor.ReadUserById(user_id)
         except User.DoesNotExist as e:
             logger.error("not found", extra={"exception": e}, exc_info=True)
@@ -56,7 +56,7 @@ class GetUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
         presenter = None
         try:
             req_body = json.loads(request.body.decode("utf-8"))
-            interactor = UserUpdater(UserRepo(User))
+            interactor = UserUpdater(UserRepo(User()))
             presenter = interactor.UpdateUser(user_id, req_body)
         except exceptions.APIException as e:
             logger.error("rest_framework exception", extra={
@@ -80,7 +80,7 @@ class GetUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
         '''
         logger.info("view receive user delete request")
         try:
-            interactor = UserDeleter(UserRepo(User))
+            interactor = UserDeleter(UserRepo(User()))
             interactor.DeleteUser(user_id)
         except exceptions.APIException as e:
             logger.error("rest_framework exception", extra={

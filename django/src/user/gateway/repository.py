@@ -1,7 +1,8 @@
 import logging
 from typing import Any, Dict, List, Union
 
-from django.db.models import Q
+from django.db.models import Model, Q
+from rest_framework.serializers import ListSerializer, ModelSerializer
 
 from base.gateway import BaseRepository
 from user.entity.model import User
@@ -12,10 +13,10 @@ logger = logging.getLogger("app")
 
 class UserRepository(BaseRepository):
     def __init__(self, entity: [User, UserSerializer]):
-        if isinstance(entity, User):
+        if isinstance(entity, Model):
             self.entity = entity
             self.serializer = None
-        elif isinstance(entity, (UserSerializer, UserListSerializer)):
+        elif isinstance(entity, (ModelSerializer, ListSerializer)):
             self.entity = entity.Meta.model
             self.serializer = entity
         else:

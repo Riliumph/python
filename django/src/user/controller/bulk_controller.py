@@ -30,7 +30,7 @@ class BulkDelete(generics.CreateAPIView):
         try:
             req_body = json.loads(request.body.decode("utf-8"))
             user_ids = req_body["user_ids"]
-            interactor = UserDeleter(UserRepo(User))
+            interactor = UserDeleter(UserRepo(User()))
             interactor.DeleteUsers(user_ids)
         except exceptions.APIException as e:
             logger.error("rest_framework exception", extra={
