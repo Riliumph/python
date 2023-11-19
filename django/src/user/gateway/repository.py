@@ -24,11 +24,12 @@ class UserRepository(BaseRepository):
 
     def get(self,  user_id) -> User:
         logger.info("user repository send select query")
-        return self.entity.objects.get(user_id=user_id)
+        # instanceから検索はできない。クラス定義を使う
+        return self.entity.__class__.objects.get(user_id=user_id)
 
     def all(self) -> List[User]:
         logger.info("user repository send select query")
-        return self.entity.objects.all().order_by(self.entity._meta.pk.name)
+        return self.entity.__class__.objects.all().order_by(self.entity._meta.pk.name)
 
     def create(self, data: Dict[str, Any]) -> List[User]:
         '''Entityを新規作成する関数
