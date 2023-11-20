@@ -2,7 +2,10 @@ import json
 import logging
 
 from django.db.utils import IntegrityError
-from rest_framework import exceptions, generics, request, response
+from rest_framework.exceptions import *
+from rest_framework.generics import *
+from rest_framework.request import Request
+from rest_framework.response import Response
 
 from user.entity.model import *
 from user.entity.validator import *
@@ -15,7 +18,7 @@ from user.usecase.updater.interactor import *
 logger = logging.getLogger("app")
 
 
-class BulkDelete(generics.CreateAPIView):
+class BulkDelete(CreateAPIView):
     '''一括削除API
     DestroyAPIはrequest bodyを使えないためCreateAPIを代用する。
     '''
@@ -26,13 +29,13 @@ class BulkDelete(generics.CreateAPIView):
     def get_queryset(self):
         return User.objects.all().order_by(self.lookup_field)
 
-    def post(self, request: request, *args, **kwargs):
+    def post(self, request: Request, *args, **kwargs):
         try:
             req_body = json.loads(request.body.decode("utf-8"))
             user_ids = req_body["user_ids"]
             interactor = UserDeleter(UserRepo(User()))
             interactor.DeleteUsers(user_ids)
-        except exceptions.APIException as e:
+        except APIException as e:
             logger.error("rest_framework exception", extra={
                          "exception": e.get_full_details()}, exc_info=True)
             raise e  # rethrow
@@ -43,5 +46,5 @@ class BulkDelete(generics.CreateAPIView):
         except Exception as e:
             logger.error(f"unexpected exception",
                          exc_info=True, stack_info=True)
-            raise exceptions.APIException  # translate unexpected exception into 500
-        return response.Response(status=200)
+            raise APIException  # translate unexpected exception into 500
+        return Response(status=200)

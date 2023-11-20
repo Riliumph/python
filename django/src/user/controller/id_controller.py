@@ -1,8 +1,10 @@
 import json
 import logging
 
-from django.db.utils import IntegrityError
-from rest_framework import exceptions, generics, request, response
+from rest_framework.exceptions import *
+from rest_framework.generics import *
+from rest_framework.request import Request
+from rest_framework.response import Response
 
 from user.entity.model import *
 from user.entity.validator import *
@@ -15,7 +17,7 @@ from user.usecase.updater.interactor import *
 logger = logging.getLogger("app")
 
 
-class GetAllCreate(generics.ListCreateAPIView):
+class GetAllCreate(ListCreateAPIView):
     '''ユーザーの全取得・作成のAPI
     '''
     serializer_class = UserSerializer
@@ -30,7 +32,7 @@ class GetAllCreate(generics.ListCreateAPIView):
             kwargs['many'] = True
         return super().get_serializer(*args, **kwargs)
 
-    def get(self, request: request, *args, **kwargs):
+    def get(self, request: Request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
@@ -44,18 +46,17 @@ class GetAllCreate(generics.ListCreateAPIView):
         '''
         presenter = None
         try:
-            logger.info(type(request))
             req_body = json.loads(request.body.decode("utf-8"))
             user_id = req_body
             data = self.get_serializer(data=user_id)
             interactor = UserCreator(UserRepo(data))
             presenter = interactor.CreateUser(user_id)
-        except exceptions.APIException as e:
+        except APIException as e:
             logger.error("rest_framework exception", extra={
                          "exception": e.get_full_details()}, exc_info=True)
             raise e  # rethrow
         except Exception as e:
             logger.error(f"unexpected exception",
                          exc_info=True, stack_info=True)
-            raise exceptions.APIException  # translate unexpected exception into 500
-        return response.Response(status=201, data=presenter.ToJson())
+            raise APIException  # translate unexpected exception into 500
+        return Response(status=201, data=presenter.ToJson())

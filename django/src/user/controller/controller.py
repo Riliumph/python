@@ -2,7 +2,10 @@ import json
 import logging
 
 from django.db.utils import IntegrityError
-from rest_framework import exceptions, generics, request, response
+from rest_framework.exceptions import *
+from rest_framework.generics import *
+from rest_framework.request import Request
+from rest_framework.response import Response
 
 from user.entity.model import User
 from user.entity.validator import *
@@ -15,7 +18,7 @@ from user.usecase.updater.interactor import *
 logger = logging.getLogger("app")
 
 
-class GetUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+class GetUpdateDestroy(RetrieveUpdateDestroyAPIView):
     '''ユーザーの取得・更新・削除API
         なぜかテキストボックスに表示されない
     '''
@@ -26,7 +29,7 @@ class GetUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         return User.objects.all().order_by(self.lookup_field)
 
-    def get(self, request: request, user_id, *args, **kwargs):
+    def get(self, request: Request, user_id, *args, **kwargs):
         '''ユーザー情報を取得するAPI
         Args:
             request (rest_framework.request.Request): 使用しない
@@ -39,14 +42,14 @@ class GetUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
             presenter = interactor.ReadUserById(user_id)
         except User.DoesNotExist as e:
             logger.error("not found", extra={"exception": e}, exc_info=True)
-            raise exceptions.NotFound
+            raise NotFound
         except Exception as e:
             logger.error(f"unexpected exception",
                          exc_info=True, stack_info=True)
-            raise exceptions.APIException
-        return response.Response(status=200, data=presenter.ToJson())
+            raise APIException
+        return Response(status=200, data=presenter.ToJson())
 
-    def update(self, request: request, user_id, *args, **kwargs):
+    def update(self, request: Request, user_id, *args, **kwargs):
         '''ユーザー情報を更新するAPI
 
         Args:
@@ -60,20 +63,20 @@ class GetUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
             req_body = json.loads(req_body)
             interactor = UserUpdater(UserRepo(User()))
             presenter = interactor.UpdateUser(user_id, req_body)
-        except exceptions.APIException as e:
+        except APIException as e:
             logger.error("rest_framework exception", extra={
                          "exception": e.get_full_details()}, exc_info=True)
             raise e
         except User.DoesNotExist as e:
             logger.error("not found", extra={"exception": e}, exc_info=True)
-            raise exceptions.NotFound
+            raise NotFound
         except Exception as e:
             logger.error(f"unexpected exception",
                          exc_info=True, stack_info=True)
-            raise exceptions.APIException
-        return response.Response(status=200, data=presenter.ToJson())
+            raise APIException
+        return Response(status=200, data=presenter.ToJson())
 
-    def delete(self, request: request, user_id, **kwargs):
+    def delete(self, request: Request, user_id, **kwargs):
         '''ユーザーを削除するAPI
         Args:
             request (rest_framework.request.Request): 使用しない
@@ -84,13 +87,13 @@ class GetUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
         try:
             interactor = UserDeleter(UserRepo(User()))
             interactor.DeleteUser(user_id)
-        except exceptions.APIException as e:
+        except APIException as e:
             logger.error("rest_framework exception", extra={
                          "exception": e.get_full_details()}, exc_info=True)
             raise e
         except User.DoesNotExist as e:
             logger.error("not found", extra={"exception": e}, exc_info=True)
-            raise exceptions.NotFound
+            raise NotFound
         except IntegrityError as e:
             logger.error("user be in in use", extra={
                          "exception": e}, exc_info=True)
@@ -98,5 +101,5 @@ class GetUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
         except Exception as e:
             logger.error(f"unexpected exception",
                          exc_info=True, stack_info=True)
-            raise exceptions.APIException
-        return response.Response(status=200)
+            raise APIException
+        return Response(status=200)
