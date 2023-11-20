@@ -25,11 +25,16 @@ class UserRepository(BaseRepository):
     def get(self,  user_id) -> User:
         logger.info("user repository send select query")
         # instanceから検索はできない。クラス定義を使う
-        return self.entity.__class__.objects.get(user_id=user_id)
+        data = self.entity.__class__.objects.get(user_id=user_id)
+        serializer = UserSerializer(data)
+        return serializer.data
 
     def all(self) -> List[User]:
         logger.info("user repository send select query")
-        return self.entity.__class__.objects.all().order_by(self.entity._meta.pk.name)
+        data = self.entity.__class__.objects.all().order_by(self.entity._meta.pk.name)
+        serializer = UserListSerializer(data)
+        logger.info(f"{type(serializer.data)}")
+        return serializer.data
 
     def create(self, data: Dict[str, Any]) -> List[User]:
         '''Entityを新規作成する関数

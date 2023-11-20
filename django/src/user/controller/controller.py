@@ -56,7 +56,8 @@ class GetUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
         logger.info("controller receive an update user request")
         presenter = None
         try:
-            req_body = json.loads(request.body.decode("utf-8"))
+            req_body = request.body.decode("utf-8")
+            req_body = json.loads(req_body)
             interactor = UserUpdater(UserRepo(User()))
             presenter = interactor.UpdateUser(user_id, req_body)
         except exceptions.APIException as e:
