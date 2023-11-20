@@ -20,10 +20,13 @@ Browsable API Rendererは
 ### bad case
 
 よくある実装として、`django.db.model`を返す方法がある。  
+これを`model_to_dict`を使って辞書データに変換して返すことでjson形式にすることがある。
 この方法では、特定の情報しか取れない。
 
-`AutoField`は取れるクセに、`DateTimeField(auto_now_add=True)`が取れないのなんで？？？？？？
-自動入力フィールドすべてが取れないならまだしもさぁ。。。
+`model_to_dict`はeditableなフィールドしか返さない仕様である。  
+
+> `AutoField`は取れるクセに、`DateTimeField(auto_now_add=True)`が取れないのなんで？？？？？？
+> 自動入力フィールドすべてが取れないならまだしもさぁ。。。
 
 ```python
 class UserRepository(BaseRepository):
