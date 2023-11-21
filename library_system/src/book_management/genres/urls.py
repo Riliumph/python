@@ -1,6 +1,6 @@
 from django.urls import path
 
-from book_management.genres import controller
+from book_management.genres.controller import controller
 
 urlpatterns = [
     path('', controller.GetAllCreate.as_view()),
