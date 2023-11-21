@@ -3,7 +3,7 @@ from typing import Any, Dict, List
 
 from django.forms.models import model_to_dict
 
-from book_management.books.usecase.inputport import GiveGenreToBookIF
+from book_management.usecase.inputport import GiveGenreToBookIF
 
 
 class GiveGenreToBook(GiveGenreToBookIF):

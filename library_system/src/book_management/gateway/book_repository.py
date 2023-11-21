@@ -2,7 +2,7 @@ import logging
 from typing import Any, Dict, List
 
 from base.gateway import BaseRepository
-from book_management.books.entity import *
+from book_management.entity.book import *
 
 
 class BookRepository(BaseRepository):

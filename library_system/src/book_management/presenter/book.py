@@ -4,7 +4,7 @@ from typing import Any, Dict, List, Union
 from django.forms.models import model_to_dict
 
 from base.outputport import BaseOutputPort
-from book_management.books.entity import BookEntity
+from book_management.entity.book import BookEntity
 
 
 class BookPresenter(BaseOutputPort):

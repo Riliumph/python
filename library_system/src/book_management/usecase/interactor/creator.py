@@ -1,11 +1,9 @@
 import logging
 from typing import Any, Dict, List
 
-from django.forms.models import model_to_dict
-
-from book_management.books.presenter import BookPresenter
-from book_management.books.repository import BookRepository
-from book_management.books.usecase.inputport import *
+from book_management.gateway.book_repository import BookRepository
+from book_management.presenter.book import BookPresenter
+from book_management.usecase.inputport import *
 
 
 class BookCreator(BookCreatorIF):

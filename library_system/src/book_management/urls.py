@@ -1,6 +1,10 @@
-from django.urls import include, path
+from django.urls import path
+
+from book_management.controller import book, book_genre, genre
 
 urlpatterns = [
-    path('v1/genres/', include("book_management.genres.urls")),
-    path('v1/books/', include("book_management.books.urls")),
+    path('v1/genres/', genre.GetAllCreate.as_view()),
+    path('v1/genres/<int:genre_id>', genre.GetUpdateDestroy.as_view()),
+    path('v1/books/', book.GetAllCreate.as_view()),
+    path('v1/books/<int:book_id>', book.GetUpdateDestroy.as_view()),
 ]
