@@ -1,8 +1,8 @@
 import abc
 from typing import Any, Dict, List
 
+from base.presenter import BasePresenter
 from user.gateway.repository import UserRepository as UserRepo
-from user.presenter.presenter import UserPresenter
 
 
 class UserCreator(abc.ABC):
@@ -11,9 +11,9 @@ class UserCreator(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def CreateUser(self, data: Dict[str, Any]) -> UserPresenter:
+    def CreateUser(self, data: Dict[str, Any]) -> BasePresenter:
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def CreateUsers(self, data: List[Dict[str, Any]]) -> UserPresenter:
+    def CreateUsers(self, data: List[Dict[str, Any]]) -> BasePresenter:
         raise NotImplementedError()

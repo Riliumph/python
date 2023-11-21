@@ -1,8 +1,8 @@
 import logging
 from typing import Any, Dict, List
 
+from base.presenter import BasePresenter
 from user.gateway.repository import UserRepository as UserRepo
-from user.presenter.presenter import UserPresenter
 from user.usecase.updater import inputport
 
 logger = logging.getLogger("app")
@@ -12,7 +12,7 @@ class UserUpdater(inputport.UserUpdater):
     def __init__(self, repo: UserRepo):
         self.repo = repo
 
-    def UpdateUser(self, user_id: int, data: Dict[str, Any]) -> UserPresenter:
+    def UpdateUser(self, user_id: int, data: Dict[str, Any]) -> BasePresenter:
         '''ユーザーを更新するビジネスロジック
 
         Args:
@@ -24,7 +24,7 @@ class UserUpdater(inputport.UserUpdater):
         '''
         logger.info("execute a update operation",
                     extra={"details": data})
-        return UserPresenter(self.repo.update(user_id, data))
+        return BasePresenter(self.repo.update(user_id, data))
 
     def UpdateUsers(self, user_ids: List[int], data: List[Dict[str, Any]]):
         return super().UpdateUsers(data)

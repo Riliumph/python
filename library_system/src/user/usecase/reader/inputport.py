@@ -1,8 +1,8 @@
 import abc
 from typing import Any, Dict, List, Tuple
 
+from base.presenter import BasePresenter
 from user.gateway.repository import UserRepository as UserRepo
-from user.presenter.presenter import UserPresenter
 
 
 class UserReader(abc.ABC):
@@ -11,5 +11,5 @@ class UserReader(abc.ABC):
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def ReadUserById(self, data: int) -> Tuple[int, UserPresenter]:
+    def ReadUserById(self, data: int) -> Tuple[int, BasePresenter]:
         raise NotImplementedError()

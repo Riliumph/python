@@ -1,8 +1,8 @@
 import abc
 from typing import Any, Dict, List
 
+from base.presenter import BasePresenter
 from user.gateway.repository import UserRepository as UserRepo
-from user.presenter.presenter import UserPresenter
 
 
 class UserUpdater(abc.ABC):
