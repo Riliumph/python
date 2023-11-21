@@ -3,7 +3,7 @@ from typing import Any, Dict, List
 
 from base.presenter import BasePresenter
 from user.gateway.repository import UserRepository as UserRepo
-from user.usecase.updater import inputport
+from user.usecase.update import inputport
 
 logger = logging.getLogger("app")
 

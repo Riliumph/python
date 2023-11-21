@@ -10,10 +10,10 @@ from rest_framework.response import Response
 from user.entity.model import User
 from user.entity.validator import *
 from user.gateway.repository import UserRepository as UserRepo
-from user.usecase.creator.interactor import *
-from user.usecase.deleter.interactor import *
-from user.usecase.reader.interactor import *
-from user.usecase.updater.interactor import *
+from user.usecase.create.interactor import *
+from user.usecase.delete.interactor import *
+from user.usecase.read.interactor import *
+from user.usecase.update.interactor import *
 
 logger = logging.getLogger("app")
 

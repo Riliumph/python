@@ -2,7 +2,7 @@ import logging
 
 from user.gateway.repository import UserRepository as UserRepo
 from user.presenter.presenter import UserPresenter
-from user.usecase.reader import inputport
+from user.usecase.read import inputport
 
 logger = logging.getLogger("app")
 
