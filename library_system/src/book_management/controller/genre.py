@@ -5,7 +5,7 @@ from rest_framework.generics import *
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from book_management.genres.entity.entity import GenreEntity, GenreSerializer
+from book_management.entity.genre import GenreEntity, GenreSerializer
 
 logger = logging.getLogger("app")
 

@@ -1,9 +1,9 @@
 import logging
 from typing import Any, Dict, List
 
-from book_management.books.gateway.repository import BookRepository
-from book_management.books.presenter.presenter import BookPresenter
-from book_management.books.usecase.inputport import *
+from book_management.gateway.book_repository import BookRepository
+from book_management.presenter.book import BookPresenter
+from book_management.usecase.inputport import *
 
 
 class BookCreator(BookCreatorIF):

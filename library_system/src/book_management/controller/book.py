@@ -2,7 +2,7 @@ import logging
 
 from rest_framework.generics import *
 
-from book_management.books.entity.entity import *
+from book_management.entity.book import *
 
 logger = logging.getLogger("app")
 
@@ -22,3 +22,14 @@ class GetAllCreate(ListCreateAPIView):
         if isinstance(kwargs.get('data'), list):
             kwargs['many'] = True
         return super().get_serializer(*args, **kwargs)
+
+
+class GetUpdateDestroy(RetrieveUpdateDestroyAPIView):
+    '''本の取得・更新・削除API
+    Djangoの機能をフルに活用して最小コードで書いてみる
+    '''
+    serializer_class = BookSerializer
+    lookup_field = BookEntity._meta.pk.name
+
+    def get_queryset(self):
+        return BookEntity.objects.all().order_by(self.lookup_field)
