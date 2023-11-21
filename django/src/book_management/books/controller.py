@@ -7,9 +7,9 @@ from rest_framework.generics import *
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from sample_app.books.entity import BookEntity, BookSerializer
-from sample_app.books.repository import BookRepository
-from sample_app.genres.entity import GenreEntity, GenreSerializer
+from book_management.books.entity import BookEntity, BookSerializer
+from book_management.books.repository import BookRepository
+from book_management.genres.entity import GenreEntity, GenreSerializer
 
 logger = logging.getLogger("app")
 

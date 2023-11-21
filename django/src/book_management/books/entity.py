@@ -6,8 +6,9 @@ from rest_framework import serializers
 from rest_framework.fields import empty
 
 from base.entity import BaseEntity
-from sample_app.books_genres.entity import BookGenreEntity, BookGenreSerializer
-from sample_app.genres.entity import GenreEntity, GenreSerializer
+from book_management.books_genres.entity import (BookGenreEntity,
+                                                 BookGenreSerializer)
+from book_management.genres.entity import GenreEntity, GenreSerializer
 
 logger = logging.getLogger("app")
 

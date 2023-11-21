@@ -5,7 +5,7 @@ from rest_framework.fields import empty
 
 from base.entity import BaseEntity
 
-# from sample_app.books.entity import BookEntity, BookGenreEntity
+# from book_management.books.entity import BookEntity, BookGenreEntity
 
 
 class GenreEntity(BaseEntity):

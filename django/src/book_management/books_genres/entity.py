@@ -4,8 +4,8 @@ from rest_framework import serializers
 from base.entity import BaseEntity
 
 # Book->BookGenre<-Genreの多対多関係を構築する時に遅延評価するため必要ない
-# from sample_app.books.entity import BookEntity
-# from sample_app.genres.entity import GenreEntity
+# from book_management.books.entity import BookEntity
+# from book_management.genres.entity import GenreEntity
 
 
 class BookGenreEntity(BaseEntity):

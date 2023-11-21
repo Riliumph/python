@@ -1,6 +1,6 @@
 from django.urls import path
 
-from sample_app.books import controller
+from book_management.books import controller
 
 urlpatterns = [
     path('', controller.GetAllCreate.as_view()),

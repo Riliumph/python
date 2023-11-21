@@ -3,9 +3,9 @@ from typing import Any, Dict, List
 
 from django.forms.models import model_to_dict
 
-from sample_app.books.presenter import BookPresenter
-from sample_app.books.repository import BookRepository
-from sample_app.books.usecase.inputport import *
+from book_management.books.presenter import BookPresenter
+from book_management.books.repository import BookRepository
+from book_management.books.usecase.inputport import *
 
 
 class BookCreator(BookCreatorIF):
