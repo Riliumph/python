@@ -1,9 +1,9 @@
 from django.urls import include, path
 
-from user.controller import bulk_controller, controller, id_controller
+from user.controller import bulk_d, lc, rud
 
 urlpatterns = [
-    path('v1/users/', id_controller.GetAllCreate.as_view()),
-    path('v1/users/<int:user_id>', controller.GetUpdateDestroy.as_view()),
-    path('v1/users/delete', bulk_controller.BulkDelete.as_view()),
+    path('v1/users/', lc.ListCreate.as_view()),
+    path('v1/users/<int:user_id>', rud.GetUpdateDestroy.as_view()),
+    path('v1/users/delete', bulk_d.BulkDelete.as_view()),
 ]

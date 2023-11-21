@@ -17,7 +17,7 @@ from user.usecase.updater.interactor import *
 logger = logging.getLogger("app")
 
 
-class GetAllCreate(ListCreateAPIView):
+class ListCreate(ListCreateAPIView):
     '''ユーザーの全取得・作成のAPI
     '''
     serializer_class = UserSerializer
