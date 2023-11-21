@@ -88,7 +88,7 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '5432',
         'OPTIONS': {
-            'options': '-c search_path=sample_app'
+            'options': '-c search_path=lib_sys'
         },
         'ATOMIC_REQUESTS': True,
     }

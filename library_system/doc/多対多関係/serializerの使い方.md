@@ -17,7 +17,7 @@ BookからGenreのテーブルを更新をかけようとした場合、次の�
 デフォでネストされたモデルは更新できねぇんだな。  
 `BookSerializer#update()`にそういう実装をするか、ネストされるシリアライザに`read_only=True`の設定をしろ
 
-```
+```console
 AssertionError at /api/v1/books/1
 
 The `.update()` method does not support writable nested fields by default.

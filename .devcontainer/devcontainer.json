@@ -52,7 +52,6 @@
 				"shardulm94.trailing-spaces",
 				"DavidAnson.vscode-markdownlint",
 				"richie5um2.vscode-sort-json",
-				"adpyke.vscode-sql-formatter",
 				"eamodio.gitlens",
 				"mhutchie.git-graph",
 				"donjayamanne.githistory",
@@ -64,7 +63,8 @@
 				"ms-toolsai.jupyter-renderers",
 				"ms-toolsai.vscode-jupyter-cell-tags",
 				"ms-toolsai.vscode-jupyter-powertoys",
-				"njpwerner.autodocstring"
+				"njpwerner.autodocstring",
+				"inferrinizzard.prettier-sql-vscode"
 			]
 		}
 	},

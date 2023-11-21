@@ -14,6 +14,9 @@
         "editor.formatOnSave": true,
         "editor.tabSize": 4
     },
+    "[sql]": {
+        "editor.defaultFormatter": "inferrinizzard.prettier-sql-vscode"
+    },
     "autoDocstring.quoteStyle": "'''",
     "cSpell.words": [
         "inputport",
@@ -35,5 +38,7 @@
         "/home/vscode/.local/lib/python3.11/site-packages"
     ],
     "python.formatting.provider": "autopep8",
-    "sql-formatter.uppercase": true
+    "Prettier-SQL.keywordCase": "upper",
+    "Prettier-SQL.SQLFlavourOverride": "postgresql",
+    "Prettier-SQL.expressionWidth": 128
 }
