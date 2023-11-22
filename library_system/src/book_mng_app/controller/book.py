@@ -7,7 +7,7 @@ from book_mng_app.entity.book import *
 logger = logging.getLogger("app")
 
 
-class GetAllCreate(ListCreateAPIView):
+class ListCreate(ListCreateAPIView):
     '''本の全取得・作成API
     Djangoの機能をフルに活用して最小コードで書いてみる
     '''

@@ -21,7 +21,7 @@ class GetUpdateDestroy(RetrieveUpdateDestroyAPIView):
         return GenreEntity.objects.all().order_by(self.lookup_field)
 
 
-class GetAllCreate(ListCreateAPIView):
+class ListCreate(ListCreateAPIView):
     '''本のジャンルの全取得・作成API
     Djangoの機能をフルに活用して最小コードで書いてみる
     '''

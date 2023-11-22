@@ -13,7 +13,7 @@ from book_mng_app.entity.genre import *
 logger = logging.getLogger("app")
 
 
-class BookGenreGetAllCreate(ListCreateAPIView):
+class BookGenreListCreate(ListCreateAPIView):
     '''本に付属するジャンル情報を取得・付与を行うAPI
     '''
     serializer_class = BookSerializer
