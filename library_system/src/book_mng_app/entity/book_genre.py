@@ -1,3 +1,5 @@
+from typing import Any, Dict, List
+
 from django.db import models
 from rest_framework import serializers
 
@@ -9,6 +11,7 @@ from base.entity import BaseEntity
 
 
 class BookGenreEntity(BaseEntity):
+    id = models.AutoField(primary_key=True)
     # BookはBookGenreに依存しBookGenreもBook（とGenre）に依存するため、
     # どちらかで遅延評価しないと循環参照が発生する。
     book_id = models.ForeignKey('BookEntity',
@@ -23,7 +26,18 @@ class BookGenreEntity(BaseEntity):
         db_table = "books_genres"
 
 
+class BookGenreListSerializer(serializers.ListSerializer):
+    def create(self, validated_data: List[Dict[str, Any]]) -> List[BookGenreEntity]:
+        data = [BookGenreEntity(**vd) for vd in validated_data]
+        return BookGenreEntity.objects.bulk_create(data)
+
+    class Meta:
+        model = BookGenreEntity
+        fields = '__all__'
+
+
 class BookGenreSerializer(serializers.ModelSerializer):
     class Meta:
         model = BookGenreEntity
         fields = '__all__'
+        list_serializer_class = BookGenreListSerializer

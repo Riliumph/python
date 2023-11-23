@@ -1,6 +1,6 @@
 CREATE TABLE
     lib_sys.books_genres (
-        -- id serial PRIMARY KEY,
+        id serial PRIMARY KEY,
         book_id INT NOT NULL,
         genre_id INT NOT NULL,
         created_at timestamptz DEFAULT CURRENT_TIMESTAMP,
