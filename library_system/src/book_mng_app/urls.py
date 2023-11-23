@@ -7,4 +7,5 @@ urlpatterns = [
     path('v1/genres/<int:genre_id>', genre.GetUpdateDestroy.as_view()),
     path('v1/books/', book.ListCreate.as_view()),
     path('v1/books/<int:book_id>', book.GetUpdateDestroy.as_view()),
+    path('v1/books_genres/', book_genre.ListCreate.as_view()),
 ]

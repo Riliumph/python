@@ -1,5 +1,6 @@
 CREATE TABLE
     lib_sys.books_genres (
+        -- id serial PRIMARY KEY,
         book_id INT NOT NULL,
         genre_id INT NOT NULL,
         created_at timestamptz DEFAULT CURRENT_TIMESTAMP,
@@ -10,7 +11,7 @@ CREATE TABLE
     );
 
 INSERT INTO
-    lib_sys.books_genres
+    lib_sys.books_genres (book_id, genre_id)
 VALUES
     (1, 1),
     (1, 2),

@@ -7,3 +7,4 @@ class BaseEntity(models.Model):
 
     class Meta:
         abstract = True
+        managed = False
