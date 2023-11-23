@@ -15,41 +15,55 @@ logger = logging.getLogger("app")
 
 class ListCreate(ListCreateAPIView):
     '''本に付属するジャンル情報を取得・付与を行うAPI
+    基本的にこのAPIをこのページ構成で使うことはあり得ない。
+    通常は、books/{id}/genresなど、本をたどって編集する。
+    ただし、将来、管理者用のバルク処理としてこのURLが使われる可能性は否定しないので一応実装してみた。
     '''
     serializer_class = BookGenreSerializer
 
     def get_queryset(self):
         return BookGenreEntity.objects.all()
 
-    # def get(self, request: Request, book_id, *args, **kwargs):
-    #     res = {}
-    #     try:
-    #         logger.info("show variable", extra={
-    #                     "details": kwargs, "book_id": book_id})
-    #         BookGenreEntity.objects.get(book_id=book_id))
-    #     except APIException as e:
-    #         logger.error("rest_framework exception", extra={
-    #                      "exception": e.get_full_details()}, exc_info=True)
-    #         raise e  # rethrow
-    #     except Exception as e:
-    #         logger.error(f"unexpected exception",
-    #                      exc_info=True, stack_info=True)
-    #         raise APIException  # translate unexpected exception into 500
-    #     return Response(status=200, data=res)
 
-    # def post(self, request: Request, book_id, *args, **kwargs):
-    #     # 引数チェックのみ
-    #     try:
-    #         logger.info(type(request))
-    #         req_body = json.loads(request.body.decode("utf-8"))
-    #         logger.info("show variable", extra={"details": {
-    #                     "book_id": book_id, "body": req_body}})
-    #     except APIException as e:
-    #         logger.error("rest_framework exception", extra={
-    #                      "exception": e.get_full_details()}, exc_info=True)
-    #         raise e  # rethrow
-    #     except Exception as e:
-    #         logger.error(f"unexpected exception",
-    #                      exc_info=True, stack_info=True)
-    #         raise APIException  # translate unexpected exception into 500
-    #     return Response(status=201)
+class GetUpdateDestroy(RetrieveUpdateDestroyAPIView):
+    '''BookからGenreを取得・修正・削除するためのAPI
+    Genre自体の取得・修正・削除ではなく、Bookへ付与する物である。
+    TODO: 付与できないからRetrieveUpdateDestroyAPIViewではない可能性が高い
+    books_genresの多対多テーブルを
+
+    Args:
+        RetrieveUpdateDestroyAPIView (_type_): _description_
+
+    Raises:
+        NotFound: _description_
+        NotFound: _description_
+        APIException: _description_
+
+    Returns:
+        _type_: _description_
+    '''
+    serializer_class = GenreSerializer
+    lookup_field = GenreEntity._meta.pk.name
+
+    def get_queryset(self):
+        return GenreEntity.objects.all().order_by(self.lookup_field)
+
+    def get(self, request, book_id, *args, **kwargs):
+        presenter = None
+        data = None
+        try:
+            # GenreEntityにはBookEntity側でManyToManyを張ってるのでbooksテーブルを参照できる。
+            genres = GenreEntity.objects.filter(books__book_id=book_id)
+            logger.info(genres)
+            logger.info(f"{type(genres)}")
+            serializer = GenreSerializer(genres, many=True)
+            data = serializer.data
+            logger.info(data)
+            logger.info(f"{type(data)}")
+        except GenreEntity.DoesNotExist as e:
+            logger.error("not error")
+            raise NotFound
+        except Exception as e:
+            logger.error(e)
+            raise APIException
+        return Response(status=200, data=data)
