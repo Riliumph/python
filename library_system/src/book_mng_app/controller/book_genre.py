@@ -8,7 +8,7 @@ import json
 import logging
 
 from django.db.utils import IntegrityError
-from rest_framework.exceptions import *
+from rest_framework import exceptions as drf_exc
 from rest_framework.generics import *
 from rest_framework.request import Request
 from rest_framework.response import Response
@@ -51,10 +51,10 @@ class ListCreate(ListCreateAPIView):
             data = serializer.data
         except GenreEntity.DoesNotExist as e:
             logger.error("not error")
-            raise NotFound
+            raise drf_exc.NotFound
         except Exception as e:
             logger.error(e)
-            raise APIException
+            raise drf_exc.APIException
         return Response(status=200, data=data)
 
     def post(self, request, *args, **kwargs):
@@ -78,8 +78,13 @@ class ListCreate(ListCreateAPIView):
             # DETAIL:  Key (book_id, genre_id)=(2, 1) already exists.
             logger.warn(f"already exist: {e}", exc_info=e)
             # 重複なので200 OKを返しても409 Conflictを返しても良い気がする
-            # return Response(status=409)
-            raise APIException
+            return Response(status=409)
+        except json.decoder.JSONDecodeError as e:
+            logger.warn(f"{e}", exc_info=e, stack_info=True)
+            raise drf_exc.ValidationError(f"{e}")
+        except Exception as e:
+            logger.error(e)
+            raise drf_exc.APIException
         return super().post(request, *args, **kwargs)
 
 
@@ -103,8 +108,8 @@ class GetDestroy(RetrieveDestroyAPIView):
             data = serializer.data
         except GenreEntity.DoesNotExist as e:
             logger.error("not error")
-            raise NotFound
+            raise drf_exc.NotFound
         except Exception as e:
             logger.error(e)
-            raise APIException
+            raise drf_exc.APIException
         return Response(status=200, data=data)
