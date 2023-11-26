@@ -29,10 +29,8 @@ class ListCreate(ListCreateAPIView):
     # - book_idがForeignKey型なら選択型のプルダウンフィールドを構築
     # - etc...
     serializer_class = BookGenreSerializer
+    queryset = BookGenreEntity.objects.all()
     # lookup_field = GenreEntity._meta.pk.name
-
-    def get_queryset(self):
-        return BookGenreEntity.objects.all()
 
     def get_serializer(self, *args, **kwargs):
         return super().get_serializer(*args, **kwargs)
@@ -94,9 +92,7 @@ class GetDestroy(RetrieveDestroyAPIView):
     '''
     serializer_class = BookGenreSerializer
     lookup_field = GenreEntity._meta.pk.name
-
-    def get_queryset(self):
-        return GenreEntity.objects.all().order_by(self.lookup_field)
+    queryset = BookGenreEntity.objects.all()
 
     def get(self, request, book_id, genre_id, *args, **kwargs):
         data = None
@@ -113,3 +109,18 @@ class GetDestroy(RetrieveDestroyAPIView):
             logger.error(e)
             raise drf_exc.APIException
         return Response(status=200, data=data)
+
+    def delete(self, request, *args, **kwargs):
+        '''Bookに付与されているGenre情報を剥奪するAPI
+        '''
+        try:
+            genre = BookGenreEntity.objects.filter(book_id=kwargs["book_id"],
+                                                   genre_id=kwargs["genre_id"])
+            genre.delete()
+        except GenreEntity.DoesNotExist as e:
+            logger.error("not error")
+            raise drf_exc.NotFound
+        except Exception as e:
+            logger.error(e)
+            raise drf_exc.APIException
+        return Response(status=204)
