@@ -97,7 +97,8 @@ class GetDestroy(RetrieveDestroyAPIView):
         data = None
         try:
             # GenreEntityにはBookEntity側でManyToManyを張ってるのでbooksテーブルを参照できる。
-            genres = GenreEntity.objects.filter(books__book_id=book_id)
+            genres = GenreEntity.objects.filter(books__book_id=book_id,
+                                                genre_id=genre_id)
             serializer = GenreSerializer(genres, many=True)
             data = serializer.data
         except GenreEntity.DoesNotExist as e:
