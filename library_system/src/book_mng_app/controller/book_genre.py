@@ -65,12 +65,12 @@ class ListCreate(ListCreateAPIView):
         '''
         data = None
         try:
-            req_body = json.loads(request.body.decode("utf-8"))
-            req_body["book_id"] = kwargs["book_id"]  # bodyのbook_idは信用しない
-            serializer = self.get_serializer(data=req_body)
+            data = request.data.copy()
+            data["book_id"] = kwargs["book_id"]  # bodyのbook_idは信用しない
+            serializer = self.get_serializer(data=data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
-            self.perform_create()
+            data = serializer.data
         except IntegrityError as e:
             # 既に重複している場合、UNIQUE制約で弾かれてしまう
             # IntegrityError at /api/v1/books/1/genres
@@ -85,7 +85,7 @@ class ListCreate(ListCreateAPIView):
         except Exception as e:
             logger.error(e)
             raise drf_exc.APIException
-        return super().post(request, *args, **kwargs)
+        return Response(status=200, data=data)
 
 
 class GetDestroy(RetrieveDestroyAPIView):
