@@ -83,28 +83,23 @@ class ListCreate(ListCreateAPIView):
         return super().post(request, *args, **kwargs)
 
 
-class GetUpdateDestroy(RetrieveUpdateDestroyAPIView):
-    '''BookからGenreを取得・修正・削除するためのAPI
-    Genre自体の取得・修正・削除ではなく、Bookへ付与する物である。
+class GetDestroy(RetrieveDestroyAPIView):
+    '''Bookに付与されているGenreを取得・削除するためのAPI
+    Genre自体への操作取得・削除ではなく、Bookへ付与する物である。
     '''
-    serializer_class = GenreSerializer
+    serializer_class = BookGenreSerializer
     lookup_field = GenreEntity._meta.pk.name
 
     def get_queryset(self):
         return GenreEntity.objects.all().order_by(self.lookup_field)
 
     def get(self, request, book_id, genre_id, *args, **kwargs):
-        presenter = None
         data = None
         try:
             # GenreEntityにはBookEntity側でManyToManyを張ってるのでbooksテーブルを参照できる。
             genres = GenreEntity.objects.filter(books__book_id=book_id)
-            logger.info(genres)
-            logger.info(f"{type(genres)}")
             serializer = GenreSerializer(genres, many=True)
             data = serializer.data
-            logger.info(data)
-            logger.info(f"{type(data)}")
         except GenreEntity.DoesNotExist as e:
             logger.error("not error")
             raise NotFound

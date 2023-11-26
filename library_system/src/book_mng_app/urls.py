@@ -10,6 +10,6 @@ urlpatterns = [
     path('v1/books/<int:book_id>/genres',
          book_genre.ListCreate.as_view()),
     path('v1/books/<int:book_id>/genres/<int:genre_id>',
-         book_genre.GetUpdateDestroy.as_view()),
+         book_genre.GetDestroy.as_view()),
 
 ]
