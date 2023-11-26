@@ -23,6 +23,7 @@ class BookEntity(BaseEntity):
     publication_date = models.DateTimeField()
     pages = models.IntegerField(null=False)
     # Book->BookGenre<-Genreの中間テーブルを挟む多対多関係において、BookかGenreのどちらかにManyToManyFieldがあればよい。
+    # どちらかに定義されていれば、どちらにも勝手に定義される模様
     genres = models.ManyToManyField(GenreEntity,
                                     through=BookGenreEntity,
                                     related_name='books')
