@@ -59,10 +59,27 @@ class ListCreate(ListCreateAPIView):
 
     def post(self, request, *args, **kwargs):
         '''本にジャンル情報を付与するAPI
-        デフォルトのままだと、serializerをGenreSerializerにしているのでジャンルテーブルに追加の処理となる。
-        TODO:
-        既存のジャンル情報を取得して、それを付与する形にしないといけない。
+        serializer_classをBookGenreSerializerにしているのでBrowsable API Rendererは外部キーの選択UIを構築する。
+        URLの設計上はパスパラメータに対するbook_idに対して処理を行うが、無意味にbook_idを選択するUIが構築されている。
+        現状、これを回避する手段は調べても見つからなかった。
         '''
+        data = None
+        try:
+            req_body = json.loads(request.body.decode("utf-8"))
+            req_body["book_id"] = kwargs["book_id"]  # bodyのbook_idは信用しない
+            serializer = self.get_serializer(data=req_body)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            self.perform_create()
+        except IntegrityError as e:
+            # 既に重複している場合、UNIQUE制約で弾かれてしまう
+            # IntegrityError at /api/v1/books/1/genres
+            # duplicate key value violates unique constraint "books_genres_book_id_genre_id_key"
+            # DETAIL:  Key (book_id, genre_id)=(2, 1) already exists.
+            logger.warn(f"already exist: {e}", exc_info=e)
+            # 重複なので200 OKを返しても409 Conflictを返しても良い気がする
+            # return Response(status=409)
+            raise APIException
         return super().post(request, *args, **kwargs)
 
 
