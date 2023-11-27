@@ -1,3 +1,8 @@
+'''ジャンル情報のAPIを記述したモジュール
+ジャンルの一覧・登録・更新・削除を定義している。
+可能な限りDjangoの機能を用いて最小限のコードでの実現を目指す。
+'''
+
 import logging
 
 from rest_framework.exceptions import *
@@ -10,23 +15,20 @@ from book_mng_app.entity.genre import GenreEntity, GenreSerializer
 logger = logging.getLogger("app")
 
 
-class GetUpdateDestroy(RetrieveUpdateDestroyAPIView):
-    '''本のジャンルの取得・更新・削除API
-    Djangoの機能をフルに活用して最小コードで書いてみる
-    '''
-    serializer_class = GenreSerializer
-    lookup_field = GenreEntity._meta.pk.name
-
-    def get_queryset(self):
-        return GenreEntity.objects.all().order_by(self.lookup_field)
-
-
 class ListCreate(ListCreateAPIView):
     '''本のジャンルの全取得・作成API
-    Djangoの機能をフルに活用して最小コードで書いてみる
+    バルク処理未対応
     '''
-    serializer_class = GenreSerializer
-    lookup_field = GenreEntity._meta.pk.name
 
-    def get_queryset(self):
-        return GenreEntity.objects.all().order_by(self.lookup_field)
+    lookup_field = GenreEntity._meta.pk.name
+    queryset = GenreEntity.objects.all()
+    serializer_class = GenreSerializer
+
+
+class GetUpdateDestroy(RetrieveUpdateDestroyAPIView):
+    '''本のジャンルの取得・更新・削除API
+    バルク処理未対応
+    '''
+    lookup_field = GenreEntity._meta.pk.name
+    queryset = GenreEntity.objects.all()
+    serializer_class = GenreSerializer

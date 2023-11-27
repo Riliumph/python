@@ -1,36 +1,52 @@
 # Djangoのサンプル
 
-## Build
+## Djangoコマンド
 
-```console
-$ docker compose build
-```
-
-## プロジェクト作成
+### プロジェクトの作成
 
 ```console
 $ docker compose run -u django backend django-admin startproject <pj-name> .
 ```
 
-## 実行
+### アプリの作成
 
-実行前にプロジェクトを始動するコマンドを有効にする。
-
-```yaml
-    command: python3 manage.py runserver 0.0.0.0:8000
+```console
+$ python manage.py startapp <app-name>
 ```
+
+### プロジェクトの実行
+
+> 実行する前にDBのコンテナを立ち上げておく必要がある
+
+```console
+$ python manage.py runserver 0.0.0.0:8000
+```
+
+もしくは
+
+F5デバッグで起動可能
+
+## Docker環境について
+
+### ビルド
+
+```console
+$ docker compose build
+```
+
+### 起動
 
 ```console
 $ docker compose up -d
 ```
 
-## 削除
+### 削除
 
 ```console
 $ docker compose down
 ```
 
-## DBへの接続
+### DBへの接続
 
 直接DBコンテナに入る場合は、`-h`オプションを省略できる。
 

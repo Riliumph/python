@@ -1,14 +1,18 @@
+import logging
 
 from django.db import models
 from rest_framework import serializers
-from rest_framework.fields import empty
 
 from base.entity import BaseEntity
+from book_mng_app.entity.book import BookSerializer
 
-# from book_mng_app.books.entity import BookEntity, BookGenreEntity
+logger = logging.getLogger("app")
 
 
 class GenreEntity(BaseEntity):
+    '''genresテーブルを表現するモデルクラス
+    DBのテーブルにおいて、books - books_genres - genresの関係性を持つ。
+    '''
     genre_id = models.AutoField(primary_key=True)
     genre_name = models.TextField(null=False)
 
@@ -19,13 +23,14 @@ class GenreEntity(BaseEntity):
 class GenreSerializer(serializers.ModelSerializer):
     def __init__(self, *args, **kwargs):
         '''コンストラクタ
-        attention:
-        スニペット補完を使ってserializers.ModelSerializerのコンストラクタをコピーしてくると正しく動作しなくなる。
-        引数の定義を`*args`にして再定義すること。
+        他のシリアライザ（主にBookSerializer）から参照されることを想定した処理が実装済み
+        詳細は、BookSerializer#update()を参照
+        Args:
+            kwargs["read_only"]: 他シリアライザから参照される際のエラー回避用フラグ
         '''
-        # BookSerializerから参照できるようにインスタンス変数に登録する
-        if "read_only" in kwargs.keys():
-            self.read_only = kwargs.get("read_only")
+        if BookSerializer.ro_flag_name in kwargs.keys():
+            logger.info("called from other serializer")
+            self.read_only = kwargs.get(BookSerializer.ro_flag_name)
         super().__init__(*args, **kwargs)
 
     class Meta:
