@@ -4,7 +4,6 @@ from django.db import models
 from rest_framework import serializers
 
 from base.entity import BaseEntity
-from book_mng_app.entity.book import BookSerializer
 
 logger = logging.getLogger("app")
 
@@ -21,6 +20,8 @@ class GenreEntity(BaseEntity):
 
 
 class GenreSerializer(serializers.ModelSerializer):
+    ro_key = "read_only"
+
     def __init__(self, *args, **kwargs):
         '''コンストラクタ
         他のシリアライザ（主にBookSerializer）から参照されることを想定した処理が実装済み
@@ -28,9 +29,9 @@ class GenreSerializer(serializers.ModelSerializer):
         Args:
             kwargs["read_only"]: 他シリアライザから参照される際のエラー回避用フラグ
         '''
-        if BookSerializer.ro_flag_name in kwargs.keys():
+        if self.ro_key in kwargs.keys():
             logger.info("called from other serializer")
-            self.read_only = kwargs.get(BookSerializer.ro_flag_name)
+            self.read_only = kwargs.get(self.ro_key)
         super().__init__(*args, **kwargs)
 
     class Meta:

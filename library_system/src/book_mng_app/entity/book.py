@@ -44,7 +44,6 @@ class BookSerializer(serializers.ModelSerializer):
     # BookからGenreを参照する際に、ID（genre_id）までの参照で良ければ、GenreSerializerを定義する必要はない。
     # BookからGenreの内容まで参照したい場合は、model側の変数名と同じ名前でGenreSerializerを定義する必要がある。
     genres = GenreSerializer(many=True, read_only=True)
-    ro_flag_name = "read_only"
 
     def update(self, instance: BookEntity, validated_data: Dict[str, Any]) -> BookEntity:
         '''BookEntityの更新処理の特殊化
