@@ -20,11 +20,9 @@ logger = logging.getLogger("app")
 class ListCreate(ListCreateAPIView):
     '''ユーザーの全取得・作成のAPI
     '''
-    serializer_class = UserSerializer
     lookup_field = User._meta.pk.name
-
-    def get_queryset(self):
-        return User.objects.all().order_by(self.lookup_field)
+    queryset = User
+    serializer_class = UserSerializer
 
     def get_serializer(self, *args, **kwargs):
         # []ではkeyError例外が発生するため、例外発生しないget()を使う
@@ -46,11 +44,10 @@ class ListCreate(ListCreateAPIView):
         '''
         presenter = None
         try:
-            req_body = json.loads(request.body.decode("utf-8"))
-            user_id = req_body
-            data = self.get_serializer(data=user_id)
-            interactor = UserCreator(UserRepo(data))
-            presenter = interactor.CreateUser(user_id)
+            data = request.data.copy()
+            serializer = self.get_serializer(data=data)
+            interactor = UserCreator(UserRepo(serializer))
+            presenter = interactor.CreateUser(data=data)
         except APIException as e:
             logger.error("rest_framework exception", extra={
                          "exception": e.get_full_details()}, exc_info=True)
