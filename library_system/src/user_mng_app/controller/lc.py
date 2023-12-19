@@ -21,7 +21,7 @@ class ListCreate(ListCreateAPIView):
     '''ユーザーの全取得・作成のAPI
     '''
     lookup_field = User._meta.pk.name
-    queryset = User
+    queryset = User.objects.all()
     serializer_class = UserSerializer
 
     def get_serializer(self, *args, **kwargs):

@@ -34,4 +34,4 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
-        list_serializer_class = UserListSerializer
+        # list_serializer_class = UserListSerializer
