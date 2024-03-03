@@ -1,13 +1,14 @@
 #!/bin/bash
 
-bash_completion=$HOME/.config/bash_completion
-mkdir -p ${bash_completion}
+bash_completion_d=$HOME/.config/bash_completion.d
+mkdir -p ${bash_completion_d}
 
-if type docker &> /dev/null; then
-  docker completion bash > ${bash_completion}/docker
-  echo 'source $HOME/.config/bash_completion/docker' >> $HOME/.bashrc
+if type docker &>/dev/null; then
+  docker completion bash >${bash_completion_d}/docker
+  echo "source ${bash_completion_d}/docker" >>$HOME/.bashrc
 fi
-if type pip  &> /dev/null; then
-  pip completion --bash > ${bash_completion}/pip
-  echo 'source $HOME/.config/bash_completion/pip' >> $HOME/.bashrc
+
+if type pip &>/dev/null; then
+  pip completion --bash >${bash_completion_d}/pip
+  echo "source ${bash_completion_d}//pip" >>$HOME/.bashrc
 fi
