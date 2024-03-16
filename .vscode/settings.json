@@ -24,7 +24,7 @@
         "usecase"
     ],
     "editor.codeActionsOnSave": {
-        "source.organizeImports": true
+        "source.organizeImports": "explicit"
     },
     "jupyter.askForKernelRestart": false,
     "notebook.cellToolbarVisibility": "hover",
