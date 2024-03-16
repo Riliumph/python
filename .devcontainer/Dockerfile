@@ -6,8 +6,8 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN curl -Lks https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -\
     && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
 
-RUN apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y\
+RUN apt-get -qq update \
+    && DEBIAN_FRONTEND=noninteractive apt-get -qq install --no-install-recommends -y\
     peco\
     silversearcher-ag\
     vim\
@@ -17,7 +17,7 @@ RUN apt-get update \
 
 # hadolint for docker
 ARG HADOLINT_URL
-RUN curl -Lk -o /usr/local/bin/hadolint ${HADOLINT_URL}\
+RUN curl -Lks -o /usr/local/bin/hadolint ${HADOLINT_URL}\
     && chmod o+x /usr/local/bin/hadolint
 
 # git
@@ -28,4 +28,4 @@ RUN make\
 
 WORKDIR /root
 COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -q -r requirements.txt
