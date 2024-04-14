@@ -1,13 +1,8 @@
 # python
 
-## jupyter notebookの起動
+## jupyter notebook
 
-- コンテナはSystemdなどは使えない
-- `postCreatedCommand`で実行すると、そのコマンドで以降が実行されないのでdotfilesがインストールされない。
-
-```console
-$ jupyter notebook --no-browser --allow-root --ip=0.0.0.0 --port=8888 --NotebookApp.token='' &
-```
+<http://localhost:8888/tree?>
 
 ## >>> ImportError: No module named xxx
 

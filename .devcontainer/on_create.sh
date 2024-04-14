@@ -12,3 +12,4 @@ if type pip &>/dev/null; then
   pip completion --bash >${bash_completion_d}/pip
   echo "source ${bash_completion_d}//pip" >>$HOME/.bashrc
 fi
+

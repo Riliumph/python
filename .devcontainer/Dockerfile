@@ -11,6 +11,7 @@ RUN apt-get -qq update \
     peco\
     silversearcher-ag\
     vim\
+    supervisor\
     default-jdk\
     && apt-get clean\
     && rm -rf /var/lib/apt/lists/*
@@ -29,3 +30,11 @@ RUN make\
 WORKDIR /root
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -q -r requirements.txt
+
+# Supervisor
+RUN groupadd -g 2000 supervisor
+COPY --chown=:supervisor --chmod=666 ./supervisor/jupyter.conf /etc/supervisor/conf.d/jupyter.conf
+RUN mkdir -p /var/run/supervisor\
+    && chmod -R o+wrx /var/run/supervisor\
+    && chmod -R o+wrx /var/log/supervisor
+
