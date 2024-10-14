@@ -8,9 +8,14 @@ RUN curl -Lks https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key ad
 
 RUN apt-get -qq update \
     && DEBIAN_FRONTEND=noninteractive apt-get -qq install --no-install-recommends -y\
+    # utility
     peco\
     silversearcher-ag\
     vim\
+    # networks
+    dnsutils\
+    iputils-ping\
+    # for container
     supervisor\
     default-jdk\
     && apt-get clean\
@@ -32,9 +37,9 @@ COPY requirements.txt ./
 RUN pip install --no-cache-dir -q -r requirements.txt
 
 # Supervisor
-RUN groupadd -g 2000 supervisor
 COPY --chown=:supervisor --chmod=666 ./supervisor/jupyter.conf /etc/supervisor/conf.d/jupyter.conf
-RUN mkdir -p /var/run/supervisor\
+RUN groupadd -g 2000 supervisor\
+    && mkdir -p /var/run/supervisor\
     && chmod -R o+wrx /var/run/supervisor\
     && chmod -R o+wrx /var/log/supervisor
 
