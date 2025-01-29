@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/python:3
+FROM mcr.microsoft.com/devcontainers/python:3.11-bookworm
 
 # Selenium用にGoogle Chromeをaptで入れられる設定を入れる。
 # ただし、aptでGoogle Chromeを入れるとエラーが発生するので手動で入れる
