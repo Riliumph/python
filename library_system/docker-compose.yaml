@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   db:
     build:
@@ -14,6 +13,7 @@ services:
       - type: bind
         source: initdb
         target: /docker-entrypoint-initdb.d
+  # TODO: 将来バックエンドは単独コンテナとする
   # backend:
   #   build:
   #     context: .
@@ -38,6 +38,7 @@ networks:
       driver: default
       config:
         - subnet: 10.10.10.0/24
+  # TODO: バックエンドは独自NWに属する
   # backend_nw:
   #   external: false
   #   ipam:

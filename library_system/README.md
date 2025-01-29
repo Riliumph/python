@@ -1,5 +1,18 @@
 # Djangoのサンプル
 
+以下の順番で実行する
+
+- [環境の整備](#ライブラリのインストール)
+- [環境の起動](#起動)
+- [Djangoサーバーの実行](#プロジェクトの実行)
+- [任意のAPI](http://localhost:8000/api/v1/users)にアクセスする。  
+
+## ライブラリのインストール
+
+```console
+$ pip install -r requirements.txt
+```
+
 ## Djangoコマンド
 
 ### プロジェクトの作成
