@@ -31,6 +31,37 @@ services:
   #     - type: bind
   #       source: ./src
   #       target: /opt/django
+  swagger-editor:
+    image: swaggerapi/swagger-editor
+    container_name: swagger-editor
+    ports:
+      - target: 8080
+        published: 8001
+
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: swagger-ui
+    ports:
+      - target: 8080
+        published: 8002
+    volumes:
+      - type: bind
+        source: ./api/openapi.yaml
+        target: /openapi.yaml
+    environment:
+      SWAGGER_JSON: /openapi.yaml
+
+  swagger-api:
+    image: stoplight/prism:3
+    container_name: swagger-api
+    ports:
+      - target: 8003
+        published: 4010
+    command: mock -h 0.0.0.0 /openapi.yaml
+    volumes:
+      - type: bind
+        source: ./api/openapi.yaml
+        target: /openapi.yaml
 networks:
   db_nw:
     external: false
