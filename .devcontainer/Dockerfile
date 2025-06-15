@@ -32,6 +32,9 @@ RUN make\
     && chmod o+x diff-highlight\
     && ln -s /usr/share/doc/git/contrib/diff-highlight/diff-highlight /usr/local/bin
 
+WORKDIR /etc/bash_completion.d
+RUN pip completion --bash > pip
+
 WORKDIR /root
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -q -r requirements.txt
