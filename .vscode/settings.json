@@ -32,7 +32,8 @@
     "notebook.output.scrolling": true,
     "notebook.output.wordWrap": true,
     "python.analysis.extraPaths": [
-        "/home/vscode/.local/lib/python3.11/site-packages"
+        "/home/vscode/.local/lib/python3.11/site-packages",
+        "./src"
     ],
     "python.autoComplete.extraPaths": [
         "/home/vscode/.local/lib/python3.11/site-packages"
