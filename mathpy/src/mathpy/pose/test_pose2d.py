@@ -9,7 +9,7 @@ from mathpy.pose.pose2d import Pose2d
     [
         (  # affine
             np.array([1.0, 1.0, 1.0]),
-            np.array([1.0, 1.0, 1.0]),
+            np.array([1.0, 1.0, 1.0, 1.0]),
             np.array([[1, 0, 2], [0, 1, 3], [0, 0, 1]]),
             np.array([3.0, 4.0, 0.0])
         )
