@@ -35,7 +35,7 @@ class Pose3d(Pose):
         return self._ori
 
     def apply_affine(self, affine4x4: np.ndarray):
-        if affine4x4.shape != (3, 3):
+        if affine4x4.shape != (4, 4):
             raise ValueError("affine matrix must be (4,4)")
         # 座標変換
         homo4x1 = np.append(self._pos, 1.0)
@@ -51,4 +51,4 @@ class Pose3d(Pose):
     def __repr__(self):
         p = self.position.tolist()
         o = self.orientation.tolist()
-        return f"Pose2d(p=[{p}], o=[{o}])"
+        return f"Pose3d(p=[{p}], o=[{o}])"
