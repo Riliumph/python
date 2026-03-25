@@ -32,11 +32,11 @@
 	},
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	"forwardPorts": [
-		5432,
-		8888,
-		8001,
-		8002,
-		8003,
+		5432, // Postgres
+		8888, // jupyter-notebook
+		8001, // library_system::swagger
+		8002, // library_system::swagger-ui
+		8003, // library_system::prism
 	],
 	"onCreateCommand": "/${localWorkspaceFolderBasename}/.devcontainer/on_create.sh",
 	// Use 'postCreateCommand' to run commands after the container is created.
