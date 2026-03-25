@@ -40,9 +40,12 @@ COPY requirements.txt ./
 RUN pip install --no-cache-dir -q -r requirements.txt
 
 # Supervisor
-COPY --chown=:supervisor --chmod=666 ./supervisor/jupyter.conf /etc/supervisor/conf.d/jupyter.conf
-RUN groupadd -g 2000 supervisor\
-    && mkdir -p /var/run/supervisor\
-    && chmod -R o+wrx /var/run/supervisor\
+RUN groupadd -g 2000 supervisor \
+    && useradd -u 2000 -g supervisor supervisor \
+    && mkdir -p /var/run/supervisor \
+    && chmod -R o+wrx /var/run/supervisor \
     && chmod -R o+wrx /var/log/supervisor
+
+COPY --chown=supervisor:supervisor ./supervisor/jupyter.conf /etc/supervisor/conf.d/jupyter.conf
+RUN chmod 666 /etc/supervisor/conf.d/jupyter.conf
 
