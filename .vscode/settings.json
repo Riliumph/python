@@ -1,9 +1,11 @@
 {
     "[dockercompose]": {
-        "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+        "editor.defaultFormatter": "ms-azuretools.vscode-docker",
+        "editor.formatOnSave": true
     },
     "[dockerfile]": {
-        "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+        "editor.defaultFormatter": "ms-azuretools.vscode-containers",
+        "editor.formatOnSave": true
     },
     "[json]": {
         "editor.defaultFormatter": "vscode.json-language-features",
@@ -41,5 +43,5 @@
     "python.formatting.provider": "autopep8",
     "Prettier-SQL.keywordCase": "upper",
     "Prettier-SQL.SQLFlavourOverride": "postgresql",
-    "Prettier-SQL.expressionWidth": 128
+    "Prettier-SQL.expressionWidth": 128,
 }
