@@ -25,10 +25,7 @@ COPY --from=toolchain /hadolint /usr/local/bin/hadolint
 # git
 COPY --from=toolchain /usr/share/doc/git/contrib/diff-highlight/diff-highlight /usr/local/bin/diff-highlight
 
-WORKDIR /etc/bash_completion.d
-RUN pip completion --bash > pip
-
-WORKDIR /root
+RUN pip completion --bash > /etc/bash_completion.d/pip
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -q -r requirements.txt
 
