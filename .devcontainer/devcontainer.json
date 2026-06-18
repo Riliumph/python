@@ -25,9 +25,11 @@
 	"workspaceMount": "source=${localWorkspaceFolder},target=/${localWorkspaceFolderBasename},type=bind",
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	"features": {
-		"ghcr.io/devcontainers/features/docker-in-docker:2": {
+		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+			"moby": false, // The 'moby' option is not supported on Debian 'trixie'
+			"installDockerBuildx": true,
 			"version": "latest",
-			"dockerDashComposeVersion": "v2"
+			"dockerDashComposeVersion": "latest"
 		}
 	},
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
