@@ -1,3 +1,9 @@
+FROM mcr.microsoft.com/devcontainers/base:2-debian12 AS toolchain
+ARG HADOLINT_URL
+RUN wget -q -O hadolint ${HADOLINT_URL} && chmod +x hadolint
+WORKDIR /usr/share/doc/git/contrib/diff-highlight
+RUN make
+
 FROM mcr.microsoft.com/devcontainers/python:3.11-bookworm
 
 # Selenium用にGoogle Chromeをaptで入れられる設定を入れる。
@@ -22,15 +28,9 @@ RUN apt-get -qq update \
     && rm -rf /var/lib/apt/lists/*
 
 # hadolint for docker
-ARG HADOLINT_URL
-RUN curl -Lks -o /usr/local/bin/hadolint ${HADOLINT_URL}\
-    && chmod o+x /usr/local/bin/hadolint
-
+COPY --from=toolchain /hadolint /usr/local/bin/hadolint
 # git
-WORKDIR /usr/share/doc/git/contrib/diff-highlight
-RUN make\
-    && chmod o+x diff-highlight\
-    && ln -s /usr/share/doc/git/contrib/diff-highlight/diff-highlight /usr/local/bin
+COPY --from=toolchain /usr/share/doc/git/contrib/diff-highlight/diff-highlight /usr/local/bin/diff-highlight
 
 WORKDIR /etc/bash_completion.d
 RUN pip completion --bash > pip
