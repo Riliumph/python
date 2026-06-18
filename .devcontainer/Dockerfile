@@ -6,14 +6,8 @@ RUN make
 
 FROM mcr.microsoft.com/devcontainers/python:3.11-bookworm
 
-# Selenium用にGoogle Chromeをaptで入れられる設定を入れる。
-# ただし、aptでGoogle Chromeを入れるとエラーが発生するので手動で入れる
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-RUN curl -Lks https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -\
-    && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
-
 RUN apt-get -qq update \
-    && DEBIAN_FRONTEND=noninteractive apt-get -qq install --no-install-recommends -y\
+    && DEBIAN_FRONTEND=noninteractive apt-get -qq install --no-install-recommends -y \
     # utility
     peco\
     silversearcher-ag\
@@ -23,7 +17,6 @@ RUN apt-get -qq update \
     iputils-ping\
     # for container
     supervisor\
-    default-jdk\
     && apt-get clean\
     && rm -rf /var/lib/apt/lists/*
 
