@@ -30,8 +30,10 @@ COPY requirements.txt ./
 RUN pip install --no-cache-dir -q -r requirements.txt
 
 # Supervisor
-RUN groupadd -g 2000 supervisor \
-    && useradd -u 2000 -g supervisor supervisor \
+ARG UID
+ARG GID
+RUN groupadd -g ${GID} supervisor \
+    && useradd -l -u ${UID} -g supervisor supervisor \
     && mkdir -p /var/run/supervisor \
     && chmod -R o+wrx /var/run/supervisor \
     && chmod -R o+wrx /var/log/supervisor

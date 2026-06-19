@@ -7,6 +7,8 @@
 		"dockerfile": "Dockerfile",
 		"args": {
 			"HADOLINT_URL": "https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Linux-x86_64",
+			"GID": 2000,
+			"UID": 2000,
 		}
 	},
 	"containerEnv": {
