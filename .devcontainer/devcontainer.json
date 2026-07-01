@@ -7,6 +7,8 @@
 		"dockerfile": "Dockerfile",
 		"args": {
 			"HADOLINT_URL": "https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Linux-x86_64",
+			"GID": 2000,
+			"UID": 2000,
 		}
 	},
 	"containerEnv": {
@@ -21,13 +23,18 @@
 		"--hostname",
 		"dev-container"
 	],
-	"workspaceFolder": "/${localWorkspaceFolderBasename}",
-	"workspaceMount": "source=${localWorkspaceFolder},target=/${localWorkspaceFolderBasename},type=bind",
+	"mounts": [
+		"source=${localEnv:HOME}/.gitconfig,target=/home/vscode/.gitconfig,type=bind,consistency=cached"
+	],
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/${localWorkspaceFolderBasename},type=bind",
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	"features": {
-		"ghcr.io/devcontainers/features/docker-in-docker:2": {
+		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+			"moby": false, // The 'moby' option is not supported on Debian 'trixie'
+			"installDockerBuildx": true,
 			"version": "latest",
-			"dockerDashComposeVersion": "v2"
+			"dockerDashComposeVersion": "latest"
 		}
 	},
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
@@ -38,7 +45,7 @@
 		8002, // library_system::swagger-ui
 		8003, // library_system::prism
 	],
-	"onCreateCommand": "/${localWorkspaceFolderBasename}/.devcontainer/on_create.sh",
+	"onCreateCommand": "${containerWorkspaceFolder}/.devcontainer/on_create.sh",
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "pip3 install --user -r requirements.txt",
 	"postStartCommand": "/usr/bin/supervisord",
