@@ -26,8 +26,8 @@
 	"mounts": [
 		"source=${localEnv:HOME}/.gitconfig,target=/home/vscode/.gitconfig,type=bind,consistency=cached"
 	],
-	"workspaceFolder": "/${localWorkspaceFolderBasename}",
-	"workspaceMount": "source=${localWorkspaceFolder},target=/${localWorkspaceFolderBasename},type=bind",
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/${localWorkspaceFolderBasename},type=bind",
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	"features": {
 		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
@@ -45,7 +45,7 @@
 		8002, // library_system::swagger-ui
 		8003, // library_system::prism
 	],
-	"onCreateCommand": "/${localWorkspaceFolderBasename}/.devcontainer/on_create.sh",
+	"onCreateCommand": "${containerWorkspaceFolder}/.devcontainer/on_create.sh",
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "pip3 install --user -r requirements.txt",
 	"postStartCommand": "/usr/bin/supervisord",
