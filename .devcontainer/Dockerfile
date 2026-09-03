@@ -41,10 +41,7 @@ ARG UID
 ARG GID
 RUN groupadd -g ${GID} supervisor &&\
     useradd -l -u ${UID} -g supervisor supervisor &&\
-    mkdir -p /var/run/supervisor &&\
-    chmod -R o+wrx /var/run/supervisor &&\
-    mkdir -p /var/log/supervisor &&\
-    chmod -R o+wrx /var/log/supervisor
+    install -d --owner=supervisor --group=supervisor /var/run/supervisor &&\
+    install -d --owner=supervisor --group=supervisor /var/log/supervisor
 
 COPY --chown=supervisor:supervisor ./supervisor/jupyter.conf /etc/supervisor/conf.d/jupyter.conf
-RUN chmod 666 /etc/supervisor/conf.d/jupyter.conf
