@@ -1,0 +1,15 @@
+services:
+  backend:
+    ports: # remote debug port
+      - target: 5678
+        published: 5678
+    command:
+      - python3
+      - -m
+      - debugpy
+      - --listen
+      - 0.0.0.0:5678
+      - --wait-for-client
+      - manage.py
+      - runserver
+      - 0.0.0.0:8000
