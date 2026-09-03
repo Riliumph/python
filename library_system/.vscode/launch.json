@@ -2,6 +2,21 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "remote debug",
+            "type": "debugpy",
+            "request": "attach",
+            "connect": {
+                "host": "host.docker.internal",
+                "port": 5678
+            },
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}/src",
+                    "remoteRoot": "/opt/django"
+                }
+            ]
+        },
+        {
             "name": "local debug",
             "type": "python",
             "request": "launch",
