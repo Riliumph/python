@@ -70,4 +70,4 @@ RUN pip install --no-cache-dir -q -r /tmp/requirements.txt
 #     install -d --owner=${USER_NAME} --group=${USER_NAME} /var/run/supervisor &&\
 #     install -d --owner=${USER_NAME} --group=${USER_NAME} /var/log/supervisor
 
-COPY ./supervisor/jupyter.conf /etc/supervisor/conf.d/jupyter.conf
+COPY ./supervisor/ /etc/supervisor
