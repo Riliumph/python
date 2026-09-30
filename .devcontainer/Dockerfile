@@ -30,6 +30,12 @@ RUN curl -fsSL ${HADOLINT_URL} -o hadolint  &&\
     install -m 755 hadolint /usr/local/bin/hadolint
 # python
 RUN pip completion --bash > /etc/bash_completion.d/pip
+# uv
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+ARG UV_URL="https://astral.sh/uv/install.sh"
+RUN curl -LsSf ${UV_URL} | sh && \
+    install -m755 /root/.local/bin/uv /usr/local/bin/uv
+
 # git
 WORKDIR /usr/share/doc/git/contrib/diff-highlight
 RUN make && \
