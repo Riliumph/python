@@ -13,24 +13,21 @@ services:
       - type: bind
         source: initdb
         target: /docker-entrypoint-initdb.d
-  # TODO: 将来バックエンドは単独コンテナとする
-  # backend:
-  #   build:
-  #     context: .
-  #     dockerfile: backend.dockerfile
-  #   hostname: backend_server
-  #   networks:
-  #     - backend_nw
-  #     - db_nw
-  #   stdin_open: true # -i
-  #   tty: true # -t
-  #   ports:
-  #     - target: 8000 # container
-  #       published: 8000 # host
-  #   volumes:
-  #     - type: bind
-  #       source: ./src
-  #       target: /opt/django
+  backend:
+    build:
+      context: .
+      dockerfile: backend.dockerfile
+    hostname: backend_server
+    networks:
+      - backend_nw
+      - db_nw
+    ports:
+      - target: 8000 # container
+        published: 8000 # host
+    volumes:
+      - type: bind
+        source: ./src
+        target: /opt/django
   swagger-editor:
     image: swaggerapi/swagger-editor
     container_name: swagger-editor
@@ -69,10 +66,9 @@ networks:
       driver: default
       config:
         - subnet: 10.10.10.0/24
-  # TODO: バックエンドは独自NWに属する
-  # backend_nw:
-  #   external: false
-  #   ipam:
-  #     driver: default
-  #     config:
-  #       - subnet: 10.10.20.0/24
+  backend_nw:
+    external: false
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.10.20.0/24
