@@ -18,7 +18,7 @@
         },
         {
             "name": "local debug",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
             "program": "${workspaceFolder}/src/manage.py",
             "args": [
