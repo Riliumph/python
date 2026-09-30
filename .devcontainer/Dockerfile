@@ -61,12 +61,13 @@ COPY --from=toolchain /etc/bash_completion.d /etc/bash_completion.d
 COPY requirements.txt /tmp/requirements.txt
 RUN pip install --no-cache-dir -q -r /tmp/requirements.txt
 
-# Supervisor
-ARG UID
-ARG GID
-RUN groupadd -g ${GID} supervisor &&\
-    useradd -l -u ${UID} -g supervisor supervisor &&\
-    install -d --owner=supervisor --group=supervisor /var/run/supervisor &&\
-    install -d --owner=supervisor --group=supervisor /var/log/supervisor
+# Supervisor not need. Instead of resolution by supervisor config
+# ARG UID=200
+# ARG GID=200
+# ARG USER_NAME="supervisor"
+# RUN groupadd -g ${GID} ${USER_NAME} &&\
+#     useradd -l -u ${UID} -g ${USER_NAME} ${USER_NAME} &&\
+#     install -d --owner=${USER_NAME} --group=${USER_NAME} /var/run/supervisor &&\
+#     install -d --owner=${USER_NAME} --group=${USER_NAME} /var/log/supervisor
 
-COPY --chown=supervisor:supervisor ./supervisor/jupyter.conf /etc/supervisor/conf.d/jupyter.conf
+COPY ./supervisor/jupyter.conf /etc/supervisor/conf.d/jupyter.conf
