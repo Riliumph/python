@@ -45,7 +45,7 @@
 		8002, // library_system::swagger-ui
 		8003, // library_system::prism
 	],
-	"onCreateCommand": "${containerWorkspaceFolder}/.devcontainer/on_create.sh",
+	// "onCreateCommand": "${containerWorkspaceFolder}/.devcontainer/on_create.sh",
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "pip3 install --user -r requirements.txt",
 	"postStartCommand": "/usr/bin/supervisord",
